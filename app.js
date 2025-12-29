@@ -4,7 +4,7 @@ BX24.init(function() {
     console.log("Bitrix24 script loaded and initialized successfully.");
 
     // Complete Layout DTO
-    const layoutDto = {
+    var layoutDto = {
         "blocks": {
             "section1": {
                 "type": "section",
