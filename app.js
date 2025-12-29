@@ -1,51 +1,56 @@
 // Ensure Bitrix24 library is initialized
 BX24.init(function() {
     
-    console.log("Bitrix24 script loaded and initialized successfully.");
+    console.log("1. ✅ Bitrix24 script loaded and initialized.");
 
-    // --- STEP 1: LOG PLACEMENT INFO ---
-    // This tells you exactly where the app is running and if 'useBuiltInInterface' is active
-    var placementInfo = BX24.placement.info();
-    console.log("🔍 Current Placement Info:", placementInfo);
+    try {
+        // CHECK 1: Does BX24.placement exist?
+        if (!BX24.placement) {
+            throw new Error("CRITICAL: BX24.placement is undefined. The library might not be loaded correctly.");
+        }
+        console.log("2. ✅ BX24.placement object exists.");
 
-    // Optional: Quick check to warn you if the environment isn't right
-    if (!placementInfo.options || placementInfo.options.useBuiltInInterface !== 'Y') {
-        console.warn("⚠️ WARNING: 'useBuiltInInterface' is NOT active. setLayout might be ignored.");
-    }
+        // CHECK 2: Try to get info
+        var placementInfo = BX24.placement.info();
+        console.log("3. 🔍 Placement Info:", placementInfo);
 
-    // --- STEP 2: DEFINE LAYOUT ---
-    var layoutDto = {
-        "blocks": {
-            "section1": {
-                "type": "section",
-                "properties": {
-                    "type": "withBorder",
-                    "title": "Welcome to Our Custom App",
-                    "imageSrc": "https://logowik.com/content/uploads/images/bitrix241512.jpg"
-                },
-                "children": {
-                    "textBlock1": {
-                        "type": "text",
-                        "properties": {
-                            "content": "This is a text block inside the section.",
-                            "fontSize": "medium",
-                            "color": "#333333"
+        // CHECK 3: Define Layout
+        var layoutDto = {
+            "blocks": {
+                "section1": {
+                    "type": "section",
+                    "properties": {
+                        "type": "withBorder",
+                        "title": "Welcome to Our Custom App",
+                        "imageSrc": "https://logowik.com/content/uploads/images/bitrix241512.jpg"
+                    },
+                    "children": {
+                        "textBlock1": {
+                            "type": "text",
+                            "properties": {
+                                "content": "This is a text block inside the section."
+                            }
                         }
                     }
                 }
             }
-        }
-    };
+        };
 
-    // --- STEP 3: EXECUTE SETLAYOUT ---
-    function callback(result) {
-        if (result.error()) {
-            console.error("❌ Error setting layout:", result.error());
-        } else {
-            console.log("✅ Layout set successfully!", result.data());
-        }
+        // CHECK 4: Execute Call
+        console.log("4. 🚀 Attempting to call setLayout...");
+        
+        BX24.placement.call('setLayout', layoutDto, function(result) {
+            console.log("5. 📞 Callback received!"); // If this doesn't log, Bitrix didn't respond
+            if (result.error()) {
+                console.error("❌ Error setting layout:", result.error());
+            } else {
+                console.log("✅ Layout set successfully!", result.data());
+            }
+        });
+
+    } catch (e) {
+        // THIS CATCHES THE CRASH
+        console.error("⛔ SCRIPT CRASHED HERE:", e.message);
+        console.error(e);
     }
-
-    BX24.placement.call('setLayout', layoutDto, callback);
-
 });
