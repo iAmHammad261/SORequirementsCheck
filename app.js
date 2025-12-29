@@ -3,7 +3,17 @@ BX24.init(function() {
     
     console.log("Bitrix24 script loaded and initialized successfully.");
 
-    // Complete Layout DTO
+    // --- STEP 1: LOG PLACEMENT INFO ---
+    // This tells you exactly where the app is running and if 'useBuiltInInterface' is active
+    var placementInfo = BX24.placement.info();
+    console.log("🔍 Current Placement Info:", placementInfo);
+
+    // Optional: Quick check to warn you if the environment isn't right
+    if (!placementInfo.options || placementInfo.options.useBuiltInInterface !== 'Y') {
+        console.warn("⚠️ WARNING: 'useBuiltInInterface' is NOT active. setLayout might be ignored.");
+    }
+
+    // --- STEP 2: DEFINE LAYOUT ---
     var layoutDto = {
         "blocks": {
             "section1": {
@@ -13,7 +23,6 @@ BX24.init(function() {
                     "title": "Welcome to Our Custom App",
                     "imageSrc": "https://logowik.com/content/uploads/images/bitrix241512.jpg"
                 },
-                // Adding children blocks (rows/text) to make the layout complete
                 "children": {
                     "textBlock1": {
                         "type": "text",
@@ -28,16 +37,15 @@ BX24.init(function() {
         }
     };
 
-    // Define the callback function
+    // --- STEP 3: EXECUTE SETLAYOUT ---
     function callback(result) {
         if (result.error()) {
-            console.error("Error setting layout:", result.error());
+            console.error("❌ Error setting layout:", result.error());
         } else {
-            console.log("Layout set successfully!", result.data());
+            console.log("✅ Layout set successfully!", result.data());
         }
     }
 
-    // Execute the placement call
     BX24.placement.call('setLayout', layoutDto, callback);
 
 });
