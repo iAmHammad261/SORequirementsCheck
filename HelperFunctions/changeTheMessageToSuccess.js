@@ -1,6 +1,6 @@
 export const changeTheMessageToSuccess = async (blockId) => {
     // Return the promise so the 'await' in the calling function works
-    return new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
         BX24.placement.call(
             'setLayoutItemState', // ⚠️ See note below about this method name
             { 
