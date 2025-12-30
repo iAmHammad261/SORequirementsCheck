@@ -47,10 +47,10 @@ BX24.init(function() {
                         }
                     },
                     "product_requirement01": {
-                        "type": "text",
+                        "type": "lineOfBlocks",
                         "properties": {
                             // ERROR 2 FIX: The property is 'value', not 'content'
-                            "value": "Products in the products section",
+                            "value": "1) Products in the products section",
                             "size": "sm",
                             // "bold": true,
                             "color": "base_70" // Optional: makes text standard black
@@ -60,7 +60,7 @@ BX24.init(function() {
                         "type": "text",
                         "properties": {
                             // ERROR 2 FIX: The property is 'value', not 'content'
-                            "value": "Customer information in the customer section",
+                            "value": "2) Customer information in the customer section",
                             "size": "sm",
                             // "bold": true,
                             "color": "base_90" // Optional: makes text standard black
@@ -70,7 +70,7 @@ BX24.init(function() {
                         "type": "text",
                         "properties": {
                             // ERROR 2 FIX: The property is 'value', not 'content'
-                            "value": "Down Payment(%) and IT-Enabled Service Fees(%)",
+                            "value": "3) Down Payment(%) and IT-Enabled Service Fees(%)",
                             "size": "sm",
                             // "bold": true,
                             "color": "base_90" // Optional: makes text standard black

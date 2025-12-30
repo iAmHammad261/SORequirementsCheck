@@ -15,13 +15,15 @@ export const markTheRequirementCompleted = async (layoutDto, requirementId) => {
                     
                     // --- UPDATE TEXT (Add Checkmark) ---
                     // Determine which property holds the text ('value' or 'content')
-                    let textKey = block.properties.value ? 'value' : 'content';
-                    let currentText = block.properties[textKey] || "";
+                    // let textKey = block.properties.value ? 'value' : 'content';
+                    let currentText = block.properties.value || "";
 
                     // // Only add checkmark if it's not already there
                     // if (!currentText.includes("✅")) {
                     //     block.properties[textKey] = "✅ " + currentText;
                     // }
+
+                    block.properties.value = currentText + "(completed)";
 
                     // --- UPDATE STYLE ---
                     // Dim the color to show it's "done"
