@@ -40,6 +40,7 @@ export const processChanges = async (layoutDto, dealId) => {
     console.log("Additional Deal Data UF_CRM_1766983873725:", addtionalDealData['UF_CRM_1766983873725']);
 
     if(contactData['HAS_EMAIL'] == 'Y' && contactData['HAS_PHONE'] == 'Y' && addtionalDealData['UF_CRM_1766983873725'] != ""){
+        console.log("Marking customer info as completed");
         await markTheRequirementCompleted(layoutDto, "customerInfo_requirement02")
     }
     else {
