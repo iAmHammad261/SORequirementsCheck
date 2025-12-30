@@ -4,6 +4,7 @@ import { getProductRows } from "./HelperFunctions/getProductRows.js";
 import { markTheRequirementCompleted } from "./HelperFunctions/markTheRequirementCompleted.js";
 import { markTheRequirementNotCompleted } from "./HelperFunctions/markTheRequirementNotCompleted.js";
 import { getMoreDealData } from "./HelperFunctions/getMoreDealData.js";
+import { getContactData } from "./HelperFunctions/getContactData.js";
 
 export const processChanges = async (layoutDto, dealId) => {
 
@@ -13,6 +14,9 @@ export const processChanges = async (layoutDto, dealId) => {
 
     // get additional deal data:
     var addtionalDealData = await getMoreDealData(dealId);
+
+    if(addtionalDealData['CONTACT_ID'])
+    var contactData = await getContactData(addtionalDealData['CONTACT_ID']);
 
     console.log("Additional Deal Data:", addtionalDealData);
 
@@ -24,5 +28,7 @@ export const processChanges = async (layoutDto, dealId) => {
     else {
         await markTheRequirementNotCompleted(layoutDto, "product_requirement01");
     }
+    
+    
 
 }
