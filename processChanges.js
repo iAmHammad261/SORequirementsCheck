@@ -15,6 +15,8 @@ export const processChanges = async (layoutDto, dealId) => {
     // get additional deal data:
     var addtionalDealData = await getMoreDealData(dealId);
 
+    console.log("Contact Data", addtionalDealData['CONTACT_ID']);
+
     if(addtionalDealData['CONTACT_ID'])
     var contactData = await getContactData(addtionalDealData["CONTACT_ID"]);
 
