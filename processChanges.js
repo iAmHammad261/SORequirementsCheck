@@ -18,6 +18,8 @@ export const processChanges = async (layoutDto, dealId) => {
     if(addtionalDealData['CONTACT_ID'])
     var contactData = await getContactData(addtionalDealData['CONTACT_ID']);
 
+    console.log("Contact Data:", contactData);
+
     console.log("Additional Deal Data:", addtionalDealData);
 
     console.log("Number of product rows:", numberOfProductRows);
@@ -28,7 +30,8 @@ export const processChanges = async (layoutDto, dealId) => {
     else {
         await markTheRequirementNotCompleted(layoutDto, "product_requirement01");
     }
+
     
-    
+
 
 }
