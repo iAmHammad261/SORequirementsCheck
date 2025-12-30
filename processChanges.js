@@ -3,6 +3,7 @@
 import { getProductRows } from "./HelperFunctions/getProductRows.js";
 import { markTheRequirementCompleted } from "./HelperFunctions/markTheRequirementCompleted.js";
 import { markTheRequirementNotCompleted } from "./HelperFunctions/markTheRequirementNotCompleted.js";
+import { getMoreDealData } from "./HelperFunctions/getMoreDealData.js";
 
 export const processChanges = async (layoutDto, dealId) => {
 
