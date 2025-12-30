@@ -8,13 +8,7 @@ export const changeTheMessageToSuccess = async (blockId) => {
                 visible: false // ✅ Fixed typo (was 'visisble')
             }, 
             (res) => {
-                // Check for errors in the response
-                if (res && res.error()) {
-                    console.error("Error hiding item:", res.error());
-                    reject(res.error());
-                } else {
-                    resolve(res);
-                }
+                resolve(res);
             }
         ); 
     });
