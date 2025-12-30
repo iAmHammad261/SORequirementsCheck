@@ -31,9 +31,9 @@ BX24.init(function() {
                         "properties": {
                             // ERROR 2 FIX: The property is 'value', not 'content'
                             "value": "Sales Order Creation Checklist",
-                            "size": "lg",
+                            "size": "xl",
                             "bold": true,
-                            "color": "base_90" // Optional: makes text standard black
+                            "color": "base_70" // Optional: makes text standard black
                         }
                     }
                 }
