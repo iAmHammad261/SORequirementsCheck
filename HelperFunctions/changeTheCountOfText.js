@@ -1,4 +1,4 @@
-export const updateLayoutBlockValue = async (layoutDto, blockId, newValue) => {
+export const changeTheCountOfText = async (layoutDto, blockId, newValue) => {
     // 1. Create a deep copy to avoid mutating the original object directly
     let updatedLayout = JSON.parse(JSON.stringify(layoutDto));
 
