@@ -19,7 +19,7 @@ BX24.init(function() {
         console.log("3. 🔍 Placement Info:", placementInfo);
 
         // get the deal id:
-        var dealId = placementInfo['entityId'];
+        var dealId = placementInfo['options']['entityId'];
 
         console.log("Deal ID:", dealId);
 
