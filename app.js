@@ -88,11 +88,11 @@ BX24.init(function() {
         
         BX24.placement.call('setLayout', layoutDto, function(result) {
             console.log("5. 📞 Callback received!"); // If this doesn't log, Bitrix didn't respond
-            if (result.error()) {
-                console.error("❌ Error setting layout:", result.error());
-            } else {
-                console.log("✅ Layout set successfully!", result.data());
-            }
+            // if (result.error) {
+            //     console.error("❌ Error setting layout:", result.error());
+            // } else {
+            //     console.log("✅ Layout set successfully!", result.data());
+            // }
         });
 
     } catch (e) {
