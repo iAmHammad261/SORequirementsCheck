@@ -13,8 +13,8 @@ export const markTheRequirementNotCompleted = async (layoutDto, requirementId) =
                 // Ensure it has properties to update
                 if (block.properties) {
                     // Update Text: Remove Checkmark if it exists
-                    let textKey = block.properties.value ? 'value' : 'content';
-                    let currentText = block.properties[textKey] || "";
+                    // let textKey = block.properties.value ? 'value' : 'content';
+                    let currentText = block.properties['value'] || "";
 
                     // if (currentText.includes("✅ ")) {
                     //     block.properties[textKey] = currentText.replace("✅ ", "");

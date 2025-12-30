@@ -7,6 +7,8 @@ BX24.init(function() {
     
     console.log("1. ✅ Bitrix24 script loaded and initialized.");
 
+    
+
     try {
         // CHECK 1: Does BX24.placement exist?
         if (!BX24.placement) {
