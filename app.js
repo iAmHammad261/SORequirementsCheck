@@ -1,4 +1,8 @@
 // Ensure Bitrix24 library is initialized
+
+
+import { processChanges } from "./processChanges.js";
+
 BX24.init(function() {
     
     console.log("1. ✅ Bitrix24 script loaded and initialized.");
@@ -13,6 +17,10 @@ BX24.init(function() {
         // CHECK 2: Try to get info
         var placementInfo = BX24.placement.info();
         console.log("3. 🔍 Placement Info:", placementInfo);
+
+        // get the deal id:
+        const dealId = placementInfo['ENTITY_ID'];
+
 
         // CHECK 3: Define Layout
         var layoutDto = {
@@ -71,6 +79,9 @@ BX24.init(function() {
         }
     }
 };
+
+        BX24.placement.call('bindEntityUpdateCallback', null, () => processChanges(layoutDto, dealId));
+
 
         // CHECK 4: Execute Call
         console.log("4. 🚀 Attempting to call setLayout...");
