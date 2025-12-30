@@ -41,8 +41,8 @@ BX24.init(function() {
                         "properties": {
                             // ERROR 2 FIX: The property is 'value', not 'content'
                             "value": "Products in the products section",
-                            "size": "lg",
-                            "bold": true,
+                            "size": "sm",
+                            // "bold": true,
                             "color": "base_70" // Optional: makes text standard black
                         }
                     },
@@ -51,8 +51,8 @@ BX24.init(function() {
                         "properties": {
                             // ERROR 2 FIX: The property is 'value', not 'content'
                             "value": "Customer information in the customer section",
-                            "size": "lg",
-                            "bold": true,
+                            "size": "sm",
+                            // "bold": true,
                             "color": "base_90" // Optional: makes text standard black
                         }
                     },
@@ -61,8 +61,8 @@ BX24.init(function() {
                         "properties": {
                             // ERROR 2 FIX: The property is 'value', not 'content'
                             "value": "Down Payment(%) and IT-Enabled Service Fees(%)",
-                            "size": "lg",
-                            "bold": true,
+                            "size": "sm",
+                            // "bold": true,
                             "color": "base_90" // Optional: makes text standard black
                         }
                     }
