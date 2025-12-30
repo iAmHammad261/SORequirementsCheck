@@ -35,6 +35,36 @@ BX24.init(function() {
                             "bold": true,
                             "color": "base_70" // Optional: makes text standard black
                         }
+                    },
+                    "product_requirement01": {
+                        "type": "text",
+                        "properties": {
+                            // ERROR 2 FIX: The property is 'value', not 'content'
+                            "value": "Products in the products section",
+                            "size": "lg",
+                            "bold": true,
+                            "color": "base_70" // Optional: makes text standard black
+                        }
+                    },
+                    "customerInfo_requirement02": {
+                        "type": "text",
+                        "properties": {
+                            // ERROR 2 FIX: The property is 'value', not 'content'
+                            "value": "Customer information in the customer section",
+                            "size": "lg",
+                            "bold": true,
+                            "color": "base_90" // Optional: makes text standard black
+                        }
+                    },
+                    "DP_IT_requirement03": {
+                        "type": "text",
+                        "properties": {
+                            // ERROR 2 FIX: The property is 'value', not 'content'
+                            "value": "Down Payment(%) and IT-Enabled Service Fees(%)",
+                            "size": "lg",
+                            "bold": true,
+                            "color": "base_90" // Optional: makes text standard black
+                        }
                     }
                 }
             }
