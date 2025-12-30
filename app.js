@@ -60,7 +60,7 @@ BX24.init(function() {
                         "type": "text",
                         "properties": {
                             // ERROR 2 FIX: The property is 'value', not 'content'
-                            "value": "2) Customer information in the customer section",
+                            "value": "2) Customer information in the contact section(Name, Email, Phone & CNIC)",
                             "size": "sm",
                             // "bold": true,
                             "color": "base_90" // Optional: makes text standard black

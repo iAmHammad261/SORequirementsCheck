@@ -10,6 +10,11 @@ export const processChanges = async (layoutDto, dealId) => {
     // first check about the product rows:
     const numberOfProductRows = await getProductRows(dealId);
 
+    // get additional deal data:
+    var addtionalDealData = await getMoreDealData(dealId);
+
+    console.log("Additional Deal Data:", addtionalDealData);
+
     console.log("Number of product rows:", numberOfProductRows);
 
     if(numberOfProductRows > 0){
