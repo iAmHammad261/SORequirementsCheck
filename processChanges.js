@@ -43,7 +43,7 @@ export const processChanges = async (layoutDto, dealId) => {
         await markTheRequirementNotCompleted(layoutDto, "customerInfo_requirement02")
     }
 
-    if(contactData['UF_CRM_1766573650'] && contactData['UF_CRM_1767092446606']){
+    if(addtionalDealData['UF_CRM_1766573650'] && addtionalDealData['UF_CRM_1767092446606']){
         await markTheRequirementCompleted(layoutDto, "DP_IT_requirement03")
     }
     else {
