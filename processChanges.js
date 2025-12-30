@@ -50,6 +50,13 @@ export const processChanges = async (layoutDto, dealId) => {
         await markTheRequirementNotCompleted(layoutDto, "DP_IT_requirement03")
     }
 
+    if(addtionalDealData['STAGE_ID'] == "WON"){
+        await markTheRequirementCompleted(layoutDto, "Deal_final_stage_requirement04")
+    }
+    else {
+        await markTheRequirementNotCompleted(layoutDto, "Deal_final_stage_requirement04")
+    }
+
     
 
 
