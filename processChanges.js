@@ -10,6 +10,7 @@ import { changeTheCountOfText} from "./HelperFunctions/changeTheCountOfText.js"
 export const processChanges = async (layoutDto, dealId) => {
 
     var noOfRequirementsCompleted = 0;
+    var totalNumberOfRequirements = 4;
 
     console.log("process change called for deal ID:", dealId);
     // first check about the product rows:
@@ -69,7 +70,7 @@ export const processChanges = async (layoutDto, dealId) => {
     }
 
 
-    changeTheCountOfText(layoutDto,"textForCount", noOfRequirementsCompleted);
+    changeTheCountOfText(layoutDto,"textForCount", (totalNumberOfRequirements-noOfRequirementsCompleted));
 
 
 }
