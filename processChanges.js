@@ -5,8 +5,12 @@ import { markTheRequirementCompleted } from "./HelperFunctions/markTheRequiremen
 import { markTheRequirementNotCompleted } from "./HelperFunctions/markTheRequirementNotCompleted.js";
 
 export const processChanges = async (layoutDto, dealId) => {
+
+    console.log("process change called for deal ID:", dealId);
     // first check about the product rows:
     const numberOfProductRows = await getProductRows(dealId);
+
+    console.log("Number of product rows:", numberOfProductRows);
 
     if(numberOfProductRows > 0){
         await markTheRequirementCompleted(layoutDto, "product_requirement01");
