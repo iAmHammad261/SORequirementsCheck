@@ -16,11 +16,13 @@ export const processChanges = async (layoutDto, dealId) => {
     var addtionalDealData = await getMoreDealData(dealId);
 
     if(addtionalDealData['CONTACT_ID'])
-    var contactData = await getContactData(addtionalDealData['CONTACT_ID']);
+    var contactData = await getContactData(addtionalDealData["CONTACT_ID"]);
+
+    console.log("Additional Deal Data:", addtionalDealData);
+
 
     console.log("Contact Data:", contactData);
 
-    console.log("Additional Deal Data:", addtionalDealData);
 
     console.log("Number of product rows:", numberOfProductRows);
 
