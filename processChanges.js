@@ -50,5 +50,7 @@ export const processChanges = async (layoutDto, dealId) => {
         await markTheRequirementNotCompleted(layoutDto, "DP_IT_requirement03")
     }
 
+    
+
 
 }

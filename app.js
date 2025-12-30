@@ -60,7 +60,7 @@ BX24.init(function() {
                         "type": "text",
                         "properties": {
                             // ERROR 2 FIX: The property is 'value', not 'content'
-                            "value": "2) Customer information in the contact section(Name, Email, Phone & CNIC)",
+                            "value": "2) Customer information in the contact section(Name, Email, CNIC)",
                             "size": "sm",
                             // "bold": true,
                             "color": "base_90" // Optional: makes text standard black
@@ -71,6 +71,16 @@ BX24.init(function() {
                         "properties": {
                             // ERROR 2 FIX: The property is 'value', not 'content'
                             "value": "3) Down Payment(%) and IT-Enabled Service Fees(%)",
+                            "size": "sm",
+                            // "bold": true,
+                            "color": "base_90" // Optional: makes text standard black
+                        }
+                    },
+                    "Deal_final_stage_requirement04": {
+                        "type": "text",
+                        "properties": {
+                            // ERROR 2 FIX: The property is 'value', not 'content'
+                            "value": "4) Close Deal Stage",
                             "size": "sm",
                             // "bold": true,
                             "color": "base_90" // Optional: makes text standard black
