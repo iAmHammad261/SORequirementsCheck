@@ -100,7 +100,7 @@ BX24.init(function() {
                                 "textmain": {
                                     type: "text",
                                     properties: {
-                                        value: 'Steps Remaining to Complete the Sales Order',
+                                        value: 'Steps Remaining To Complete the Sales Order: ',
                                         size: 'lg',
                                         color: 'base_90'
                                     }
