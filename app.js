@@ -26,11 +26,13 @@ BX24.init(function() {
                 
                 // ERROR 1 FIX: Inner blocks must be inside 'properties.blocks', not 'children'
                 "blocks": {
-                    "textBlock1": {
+                    "mainHeading": {
                         "type": "text",
                         "properties": {
                             // ERROR 2 FIX: The property is 'value', not 'content'
-                            "value": "This is a text block inside the section.",
+                            "value": "Sales Order Creation Checklist",
+                            "size": "lg",
+                            "bold": true,
                             "color": "base_90" // Optional: makes text standard black
                         }
                     }
