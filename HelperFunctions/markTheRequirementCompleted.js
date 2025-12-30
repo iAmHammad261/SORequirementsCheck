@@ -18,10 +18,10 @@ export const markTheRequirementCompleted = async (layoutDto, requirementId) => {
                     let textKey = block.properties.value ? 'value' : 'content';
                     let currentText = block.properties[textKey] || "";
 
-                    // Only add checkmark if it's not already there
-                    if (!currentText.includes("✅")) {
-                        block.properties[textKey] = "✅ " + currentText;
-                    }
+                    // // Only add checkmark if it's not already there
+                    // if (!currentText.includes("✅")) {
+                    //     block.properties[textKey] = "✅ " + currentText;
+                    // }
 
                     // --- UPDATE STYLE ---
                     // Dim the color to show it's "done"
@@ -34,11 +34,11 @@ export const markTheRequirementCompleted = async (layoutDto, requirementId) => {
                         id: requirementId,
                         properties: block.properties
                     }, (res) => {
-                        if (res.error()) {
-                            console.error("❌ UI Update Failed:", res.error());
-                        } else {
-                            console.log("✅ UI Updated (Item State Set to Completed)");
-                        }
+                        // if (res.error()) {
+                        //     console.error("❌ UI Update Failed:", res.error());
+                        // } else {
+                        //     console.log("✅ UI Updated (Item State Set to Completed)");
+                        // }
                     });
                 }
                 return true; // Stop searching, we found it

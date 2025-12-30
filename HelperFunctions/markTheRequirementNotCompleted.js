@@ -30,11 +30,11 @@ export const markTheRequirementNotCompleted = async (layoutDto, requirementId) =
                         id: requirementId,
                         properties: block.properties
                     }, (res) => {
-                        if (res.error()) {
-                            console.error("❌ UI Update Failed:", res.error());
-                        } else {
-                            console.log("✅ UI Updated (Item State Set to Pending)");
-                        }
+                        // if (res.error()) {
+                        //     console.error("❌ UI Update Failed:", res.error());
+                        // } else {
+                        //     console.log("✅ UI Updated (Item State Set to Pending)");
+                        // }
                     });
                 }
                 return true; // Stop searching, we found it
