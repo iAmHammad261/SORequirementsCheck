@@ -33,7 +33,7 @@ BX24.init(function() {
                             "value": "Sales Order Creation Checklist",
                             "size": "xl",
                             "bold": true,
-                            "color": "base_70" // Optional: makes text standard black
+                            "color": "base_90" // Optional: makes text standard black
                         }
                     },
                     "product_requirement01": {
