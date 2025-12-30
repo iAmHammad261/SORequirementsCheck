@@ -19,7 +19,7 @@ BX24.init(function() {
         console.log("3. 🔍 Placement Info:", placementInfo);
 
         // get the deal id:
-        const dealId = placementInfo['ENTITY_ID'];
+        const dealId = placementInfo['entityId'];
 
 
         // CHECK 3: Define Layout
