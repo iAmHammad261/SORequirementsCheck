@@ -16,25 +16,29 @@ BX24.init(function() {
 
         // CHECK 3: Define Layout
         var layoutDto = {
-            "blocks": {
-                "section1": {
-                    "type": "section",
-                    "properties": {
-                        "type": "withBorder",
-                        "title": "Welcome to Our Custom App",
-                        "imageSrc": "https://logowik.com/content/uploads/images/bitrix241512.jpg"
-                    },
-                    "children": {
-                        "textBlock1": {
-                            "type": "text",
-                            "properties": {
-                                "content": "This is a text block inside the section."
-                            }
+    "blocks": {
+        "section1": {
+            "type": "section",
+            "properties": {
+                "type": "withBorder",
+                "title": "Welcome to Our Custom App",
+                "imageSrc": "https://logowik.com/content/uploads/images/bitrix241512.jpg",
+                
+                // ERROR 1 FIX: Inner blocks must be inside 'properties.blocks', not 'children'
+                "blocks": {
+                    "textBlock1": {
+                        "type": "text",
+                        "properties": {
+                            // ERROR 2 FIX: The property is 'value', not 'content'
+                            "value": "This is a text block inside the section.",
+                            "color": "base_90" // Optional: makes text standard black
                         }
                     }
                 }
             }
-        };
+        }
+    }
+};
 
         // CHECK 4: Execute Call
         console.log("4. 🚀 Attempting to call setLayout...");
