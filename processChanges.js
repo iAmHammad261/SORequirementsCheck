@@ -6,6 +6,7 @@ import { markTheRequirementNotCompleted } from "./HelperFunctions/markTheRequire
 import { getMoreDealData } from "./HelperFunctions/getMoreDealData.js";
 import { getContactData } from "./HelperFunctions/getContactData.js";
 import { changeTheCountOfText} from "./HelperFunctions/changeTheCountOfText.js"
+import { changeTheMessageToSuccess } from "./HelperFunctions/changeTheMessageToSuccess.js";
 
 export const processChanges = async (layoutDto, dealId) => {
 
@@ -71,6 +72,10 @@ export const processChanges = async (layoutDto, dealId) => {
 
 
     changeTheCountOfText(layoutDto,"textForCount", (totalNumberOfRequirements-noOfRequirementsCompleted));
+
+    if(noOfRequirementsCompleted == totalNumberOfRequirements){
+        await changeTheMessageToSuccess(layoutDto,"infoTextForRemaining");
+    }
 
 
 }

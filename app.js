@@ -95,7 +95,7 @@ BX24.init(function() {
             properties: {
                 type: "primary",
                 blocks: {
-                    "infoText": {
+                    "infoTextForRemaining": {
                         "type": "lineOfBlocks",
                         properties: {
                             blocks: {
