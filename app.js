@@ -47,7 +47,7 @@ BX24.init(function() {
                         }
                     },
                     "product_requirement01": {
-                        "type": "lineOfBlocks",
+                        "type": "text",
                         "properties": {
                             // ERROR 2 FIX: The property is 'value', not 'content'
                             "value": "1) Products in the products section",

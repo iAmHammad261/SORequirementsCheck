@@ -23,7 +23,7 @@ export const markTheRequirementCompleted = async (layoutDto, requirementId) => {
                     //     block.properties[textKey] = "✅ " + currentText;
                     // }
 
-                    // block.properties.value = currentText + "(completed)";
+                    block.properties.value = currentText + "(completed)";
 
                     // --- UPDATE STYLE ---
                     // Dim the color to show it's "done"

@@ -16,9 +16,10 @@ export const markTheRequirementNotCompleted = async (layoutDto, requirementId) =
                     let textKey = block.properties.value ? 'value' : 'content';
                     let currentText = block.properties[textKey] || "";
 
-                    if (currentText.includes("✅ ")) {
-                        block.properties[textKey] = currentText.replace("✅ ", "");
-                    }
+                    // if (currentText.includes("✅ ")) {
+                    //     block.properties[textKey] = currentText.replace("✅ ", "");
+                    // }
+                    block.properties.value = currentText.replace("(completed)", "");
 
                     // Update Style: Restore color to "active" state
                     block.properties.color = "base_90"; 
