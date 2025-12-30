@@ -34,7 +34,6 @@ BX24.init(function() {
                 "title": "Welcome to Our Custom App",
                 "imageSrc": "https://logowik.com/content/uploads/images/bitrix241512.jpg",
                 
-                // ERROR 1 FIX: Inner blocks must be inside 'properties.blocks', not 'children'
                 "blocks": {
                     "mainHeading": {
                         "type": "text",
@@ -88,6 +87,40 @@ BX24.init(function() {
                     }
                 }
             }
+        },
+        "section2": {
+            type: "section",
+            properties: {
+                type: "primary",
+                blocks: {
+                    "infoText": {
+                        "type": "lineOfBlocks",
+                        properties: {
+                            blocks: {
+                                "textmain": {
+                                    type: "text",
+                                    properties: {
+                                        value: 'Steps Remaining to Complete the Sales Order',
+                                        size: 'lg',
+                                        color: 'base_90'
+                                    }
+
+                                },
+                                "textForCount": {
+                                    type: "text",
+                                    properties: {
+                                        value: '4',
+                                        size: 'lg',
+                                        color: 'base_90',
+                                        bold: true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
         }
     }
 };
