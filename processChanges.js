@@ -74,7 +74,7 @@ export const processChanges = async (layoutDto, dealId) => {
     changeTheCountOfText(layoutDto,"textmain", (totalNumberOfRequirements-noOfRequirementsCompleted));
 
     if(noOfRequirementsCompleted == totalNumberOfRequirements){
-        changeTheMessageToSuccess(layoutDto);
+        await changeTheMessageToSuccess(layoutDto);
     }
 
 
