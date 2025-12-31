@@ -3,7 +3,7 @@
 
 import { processChanges } from "./processChanges.js";
 
-BX24.init(function() {
+BX24.init(async function() {
     
     console.log("1. ✅ Bitrix24 script loaded and initialized.");
 
@@ -135,13 +135,10 @@ BX24.init(function() {
         console.log("4. 🚀 Attempting to call setLayout...");
         
         BX24.placement.call('setLayout', layoutDto, function(result) {
-            console.log("5. 📞 Callback received!"); // If this doesn't log, Bitrix didn't respond
-            // if (result.error) {
-            //     console.error("❌ Error setting layout:", result.error());
-            // } else {
-            //     console.log("✅ Layout set successfully!", result.data());
-            // }
+            console.log("5. Callback received!"); // If this doesn't log, Bitrix didn't respond
         });
+
+        await processChanges(layoutDto, dealId)
 
     } catch (e) {
         // THIS CATCHES THE CRASH
