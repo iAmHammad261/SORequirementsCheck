@@ -1,14 +1,16 @@
 // Ensure Bitrix24 library is initialized
 
 
+
 import { processChanges } from "./processChanges.js";
-import { changeTheBlockVisibility } from "./HelperFunctions/changeTheBlockVisibility.js";
+import { constructLayoutDto } from "./HelperFunctions/constructLayoutDto.js";
 
 BX24.init(async function() {
     
     console.log("1. ✅ Bitrix24 script loaded and initialized.");
 
-    
+    BX24.placement.call('bindEntityUpdateCallback', null, () => processChanges(layoutDto, dealId));
+
 
     try {
         // CHECK 1: Does BX24.placement exist?
@@ -28,121 +30,19 @@ BX24.init(async function() {
 
 
         // CHECK 3: Define Layout
-        var layoutDto = {
-    "blocks": {
-        "section1": {
-            "type": "section",
-            "properties": {
-                "type": "withBorder",
-                "title": "Welcome to Our Custom App",
-                "imageSrc": "https://logowik.com/content/uploads/images/bitrix241512.jpg",
-                
-                "blocks": {
-                    "mainHeading": {
-                        "type": "text",
-                        "properties": {
-                            // ERROR 2 FIX: The property is 'value', not 'content'
-                            "value": "Sales Order Creation Checklist",
-                            "size": "xl",
-                            "bold": true,
-                            "color": "base_90" // Optional: makes text standard black
-                        }
-                    },
-                    "product_requirement01": {
-                        "type": "text",
-                        "properties": {
-                            // ERROR 2 FIX: The property is 'value', not 'content'
-                            "value": "1) Products in the products section",
-                            "size": "sm",
-                            // "bold": true,
-                            "color": "base_70" // Optional: makes text standard black
-                        }
-                    },
-                    "customerInfo_requirement02": {
-                        "type": "text",
-                        "properties": {
-                            // ERROR 2 FIX: The property is 'value', not 'content'
-                            "value": "2) Customer information in the contact section(Name, Email, CNIC)",
-                            "size": "sm",
-                            // "bold": true,
-                            "color": "base_90" // Optional: makes text standard black
-                        }
-                    },
-                    "DP_IT_requirement03": {
-                        "type": "text",
-                        "properties": {
-                            // ERROR 2 FIX: The property is 'value', not 'content'
-                            "value": "3) Down Payment(%) and IT-Enabled Service Fees(%)",
-                            "size": "sm",
-                            // "bold": true,
-                            "color": "base_90" // Optional: makes text standard black
-                        }
-                    },
-                    "Deal_final_stage_requirement04": {
-                        "type": "text",
-                        "properties": {
-                            // ERROR 2 FIX: The property is 'value', not 'content'
-                            "value": "4) Close Deal Stage",
-                            "size": "sm",
-                            // "bold": true,
-                            "color": "base_90" // Optional: makes text standard black
-                        }
-                    }
-                }
-            }
-        },
-        "section2": {
-            type: "section",
-            properties: {
-                type: "default",
-                blocks: {
-                    "infoTextForRemaining": {
-                        "type": "lineOfBlocks",
-                        properties: {
-                            blocks: {
-                                "textmain": {
-                                    type: "text",
-                                    properties: {
-                                        value: 'Steps Remaining To Complete the Sales Order: ',
-                                        size: 'lg',
-                                        color: 'base_90'
-                                    }
 
-                                },
-                                // "textForCount": {
-                                //     type: "text",
-                                //     properties: {
-                                //         value: '4',
-                                //         size: 'lg',
-                                //         color: 'base_90',
-                                //         bold: true
-                                //     }
-                                // }
-                            }
-                        }
-                    }
-                }
-            }
-
-        }
-    },
-    // "primaryButton": {"title": "Sync With Netsuite"}
-};
-
-        BX24.placement.call('bindEntityUpdateCallback', null, () => processChanges(layoutDto, dealId));
-
+        var layoutDto = await constructLayoutDto(dealId);
 
         // CHECK 4: Execute Call
-        console.log("4. 🚀 Attempting to call setLayout...");
         
         
         BX24.placement.call('setLayout', layoutDto, function(result) {
             console.log("5. Callback received!"); // If this doesn't log, Bitrix didn't respond
         });
 
-        await changeTheBlockVisibility("primaryButton", false);
+        // await changeTheBlockVisibility("primaryButton", false);
 
-        await processChanges(layoutDto, dealId)
+        // await processChanges(layoutDto, dealId)
 
     } catch (e) {
         // THIS CATCHES THE CRASH
