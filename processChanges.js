@@ -28,6 +28,12 @@ export const processChanges = async (layoutDto, dealId) => {
     console.log("Additional Deal Data:", addtionalDealData);
 
 
+    // get the link of the sales order:
+    var salesOrderLink = addtionalDealData['UF_CRM_1766983873725'];
+
+
+
+
     console.log("Contact Data:", contactData);
 
 
@@ -75,6 +81,10 @@ export const processChanges = async (layoutDto, dealId) => {
 
     if(noOfRequirementsCompleted == totalNumberOfRequirements){
         await changeTheMessageToSuccess(layoutDto);
+        if(salesOrderLink  && salesOrderLink != ""){
+            
+
+        }
     }
 
 

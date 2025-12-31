@@ -2,6 +2,7 @@
 
 
 import { processChanges } from "./processChanges.js";
+import { changeTheBlockVisibility } from "./HelperFunctions/changeTheBlockVisibility.js";
 
 BX24.init(async function() {
     
@@ -134,9 +135,12 @@ BX24.init(async function() {
         // CHECK 4: Execute Call
         console.log("4. 🚀 Attempting to call setLayout...");
         
+        
         BX24.placement.call('setLayout', layoutDto, function(result) {
             console.log("5. Callback received!"); // If this doesn't log, Bitrix didn't respond
         });
+
+        await changeTheBlockVisibility("primaryButton", false);
 
         await processChanges(layoutDto, dealId)
 
