@@ -123,9 +123,9 @@ BX24.init(function() {
                 }
             }
 
-        },
-        "primaryButton": {"title": "Sync With Netsuite"}
-    }
+        }
+    },
+    "primaryButton": {"title": "Sync With Netsuite"}
 };
 
         BX24.placement.call('bindEntityUpdateCallback', null, () => processChanges(layoutDto, dealId));

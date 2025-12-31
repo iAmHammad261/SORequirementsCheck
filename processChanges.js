@@ -75,6 +75,7 @@ export const processChanges = async (layoutDto, dealId) => {
 
     if(noOfRequirementsCompleted == totalNumberOfRequirements){
         await changeTheMessageToSuccess(layoutDto);
+        
     }
 
 
