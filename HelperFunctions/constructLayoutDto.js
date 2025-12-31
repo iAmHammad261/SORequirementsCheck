@@ -1,6 +1,6 @@
 import { getMoreDealData } from "./getMoreDealData.js";
 import { getContactData } from "./getContactData.js";
-import { getProductRows } from "./HelperFunctions/getProductRows.js";
+import { getProductRows } from "./getProductRows.js";
 
 export const constructLayoutDto = async (dealId) => {
   const numberOfProductRows = await getProductRows(dealId);
