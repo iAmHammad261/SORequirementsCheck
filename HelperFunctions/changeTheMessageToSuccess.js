@@ -1,5 +1,5 @@
 
-import { findBlockById } from "./findBlockById";
+import { findBlockById } from "./findBlockById.js";
 
 export async function changeTheMessageToSuccess(layoutDto) {
 
