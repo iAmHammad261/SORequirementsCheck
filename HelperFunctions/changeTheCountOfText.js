@@ -13,8 +13,12 @@ export const changeTheCountOfText = async (layoutDto, blockId, newValue) => {
                 // Ensure it has properties to update
                 if (block.properties) {
                     
+
+
+                    var currentValue = block.properties.value.replace(/(:).*/, "$1").trim() || "";
+
                     // Update the value to the new input
-                    block.properties.value = newValue;
+                    block.properties.value = currentValue + newValue;
 
                     // ---------------------------------------------------------
                     // 🚀 Update the Bitrix UI immediately for this block

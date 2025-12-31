@@ -108,15 +108,15 @@ BX24.init(function() {
                                     }
 
                                 },
-                                "textForCount": {
-                                    type: "text",
-                                    properties: {
-                                        value: '4',
-                                        size: 'lg',
-                                        color: 'base_90',
-                                        bold: true
-                                    }
-                                }
+                                // "textForCount": {
+                                //     type: "text",
+                                //     properties: {
+                                //         value: '4',
+                                //         size: 'lg',
+                                //         color: 'base_90',
+                                //         bold: true
+                                //     }
+                                // }
                             }
                         }
                     }
