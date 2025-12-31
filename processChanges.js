@@ -6,7 +6,7 @@ import { markTheRequirementNotCompleted } from "./HelperFunctions/markTheRequire
 import { getMoreDealData } from "./HelperFunctions/getMoreDealData.js";
 import { getContactData } from "./HelperFunctions/getContactData.js";
 import { changeTheCountOfText} from "./HelperFunctions/changeTheCountOfText.js"
-import { changeTheMessageToSuccess } from "./HelperFunctions/changeTheMessageToSuccess.js";
+// import { changeTheMessageToSuccess } from "./HelperFunctions/changeTheMessageToSuccess.js";
 
 export const processChanges = async (layoutDto, dealId) => {
 
