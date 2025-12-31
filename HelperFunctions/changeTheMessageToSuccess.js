@@ -12,6 +12,7 @@ export async function changeTheMessageToSuccess(layoutDto) {
     if(blockToUpdate && blockToUpdate.properties) {
         blockToUpdate.properties.value = "All Requirements are completed and deal is ready to sync with NetSuite"
         blockToUpdate.properties.color = "success"; 
+        blockToUpdate.properties.size = 'lg'
     }
 
     // update the Bitrix UI immediately for this block

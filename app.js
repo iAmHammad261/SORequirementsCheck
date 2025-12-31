@@ -93,7 +93,7 @@ BX24.init(function() {
         "section2": {
             type: "section",
             properties: {
-                type: "primary",
+                type: "default",
                 blocks: {
                     "infoTextForRemaining": {
                         "type": "lineOfBlocks",
