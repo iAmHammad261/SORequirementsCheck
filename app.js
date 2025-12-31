@@ -123,7 +123,8 @@ BX24.init(function() {
                 }
             }
 
-        }
+        },
+        "primaryButton": {"title": "Sync With Netsuite"}
     }
 };
 
