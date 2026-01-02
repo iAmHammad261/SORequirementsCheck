@@ -92,7 +92,7 @@ export const constructLayoutDto = async (dealId) => {
                   textmain: {
                     type: "text",
                     properties: {
-                      value: salesOrderLink ? "✅ Sync Completed" : `Progress: ${completedCount} / ${totalRequirements}`,
+                      value: salesOrderLink ? "Sync Completed" : `Steps remaining to complete sales order checklist: ${completedCount} / ${totalRequirements}`,
                       size: "lg",
                       color: salesOrderLink ? "success" : "base_90",
                       bold: true
