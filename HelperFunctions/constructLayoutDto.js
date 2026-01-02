@@ -2,6 +2,24 @@ import { getMoreDealData } from "./getMoreDealData.js";
 import { getContactData } from "./getContactData.js";
 import { getProductRows } from "./getProductRows.js";
 
+
+
+const fetchTheTextInfo = (salesOrderLink, isReadyToSync, completedCount, totalRequirements) => {
+
+
+  if(!isReadyToSync)
+    return `Steps remaining to complete sales order checklist: ${completedCount} / ${totalRequirements}`
+
+  if(isReadyToSync && salesOrderLink == "")
+    return "Deal is ready to be synced with Netsuite."
+
+  if(salesOrderLink && salesOrderLink !== "") 
+    return "Sync has been completed successfully with Netsuite."
+
+
+
+}
+
 export const constructLayoutDto = async (dealId) => {
   const [numberOfProductRows, additionalDealData] = await Promise.all([
     getProductRows(dealId),
@@ -94,7 +112,7 @@ export const constructLayoutDto = async (dealId) => {
                   textmain: {
                     type: "text",
                     properties: {
-                      value: salesOrderLink ? "Sync Completed" : `Steps remaining to complete sales order checklist: ${completedCount} / ${totalRequirements}`,
+                      value: fetchTheTextInfo(salesOrderLink, isReadyToSync, completedCount, totalRequirements),
                       size: "lg",
                       color: salesOrderLink ? "success" : "base_90",
                       bold: true
