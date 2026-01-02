@@ -7,7 +7,7 @@ export const constructLayoutDto = async (dealId) => {
   const additionalDealData = await getMoreDealData(dealId);
   
   // Define salesOrderLink early to use in logic
-  const salesOrderLink = additionalDealData["UF_CRM_1766983873725"];
+  const salesOrderLink = additionalDealData["UF_CRM_1767161134530"];
   
   let contactData = {};
   if (additionalDealData["CONTACT_ID"]) {
@@ -16,7 +16,7 @@ export const constructLayoutDto = async (dealId) => {
 
   // --- Logic for Requirements ---
   const req1 = numberOfProductRows > 0;
-  const req2 = contactData['HAS_EMAIL'] === 'Y' && contactData['HAS_PHONE'] === 'Y' && (salesOrderLink || "") !== "";
+  const req2 = contactData['HAS_EMAIL'] === 'Y' && contactData['HAS_PHONE'] === 'Y' && additionalDealData['UF_CRM_1766983873725'] != "";
   const req3 = !!(additionalDealData['UF_CRM_1766573650'] && additionalDealData['UF_CRM_1767092446606']);
   const req4 = additionalDealData['STAGE_ID'] === "WON";
 
