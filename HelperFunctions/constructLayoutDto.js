@@ -3,8 +3,10 @@ import { getContactData } from "./getContactData.js";
 import { getProductRows } from "./getProductRows.js";
 
 export const constructLayoutDto = async (dealId) => {
-  const numberOfProductRows = await getProductRows(dealId);
-  const additionalDealData = await getMoreDealData(dealId);
+  const [numberOfProductRows, additionalDealData] = await Promise.all([
+    getProductRows(dealId),
+    getMoreDealData(dealId)
+  ]);
   
   // Define salesOrderLink early to use in logic
   const salesOrderLink = additionalDealData["UF_CRM_1767161134530"];

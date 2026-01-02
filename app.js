@@ -7,7 +7,7 @@ import { constructLayoutDto } from "./HelperFunctions/constructLayoutDto.js";
 
 BX24.init(async function() {
     
-    console.log("1. ✅ Bitrix24 script loaded and initialized.");
+    console.log("1. Bitrix24 script loaded and initialized.");
 
     BX24.placement.call('bindEntityUpdateCallback', null, () => processChanges(layoutDto, dealId));
 
@@ -17,7 +17,7 @@ BX24.init(async function() {
         if (!BX24.placement) {
             throw new Error("CRITICAL: BX24.placement is undefined. The library might not be loaded correctly.");
         }
-        console.log("2. ✅ BX24.placement object exists.");
+        console.log("2. BX24.placement object exists.");
 
         // CHECK 2: Try to get info
         var placementInfo = BX24.placement.info();
@@ -36,9 +36,7 @@ BX24.init(async function() {
         // CHECK 4: Execute Call
         
         
-        BX24.placement.call('setLayout', layoutDto, function(result) {
-            console.log("5. Callback received!"); // If this doesn't log, Bitrix didn't respond
-        });
+        BX24.placement.call('setLayout', layoutDto, null);
 
         // await changeTheBlockVisibility("primaryButton", false);
 
@@ -46,7 +44,7 @@ BX24.init(async function() {
 
     } catch (e) {
         // THIS CATCHES THE CRASH
-        console.error("⛔ SCRIPT CRASHED HERE:", e.message);
+        console.error("SCRIPT CRASHED HERE:", e.message);
         console.error(e);
     }
 });
