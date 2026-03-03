@@ -26,7 +26,7 @@ export const checkBuyerRequirement = async (contactIdList) => {
     "Following mandatory fields are missing for the buyer(s): \n";
   var messageArray = [];
   for (var buyer of buyerData) {
-    var messageForCurrentBuyer = `Buyer Name: ${buyer.NAME} is missing the following fields: \n`;
+    var messageForCurrentBuyer = `${buyer.NAME} is missing the following fields: \n`;
     var missingFieldsMessage = "";
 
     for (var fields of mandatoryFields) {
@@ -45,7 +45,7 @@ export const checkBuyerRequirement = async (contactIdList) => {
 
     if (missingFieldsMessage) {
       isBuyerInfoComplete = false;
-      messageArray.push(messageForCurrentBuyer + missingFieldsMessage);
+      messageArray.push(messageForCurrentBuyer + missingFieldsMessage.replace(/,\s*$/, ''));
     }
   }
 
