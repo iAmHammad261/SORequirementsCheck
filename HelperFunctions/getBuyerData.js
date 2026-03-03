@@ -82,26 +82,14 @@ export const getBuyerData = async (contactIdsList) => {
       PERMANENT_ADDRESS: permanentAddress,
       EMAIL: hasEmail == "Y" && email ? email[0].VALUE : "",
       PHONE: hasPhone == "Y" && phone ? phone[0].VALUE : "",
-      IDENTIFICATION_DOCUMENT_TYPE: await getContactUserFieldListValue(
-        "UF_CRM_1768218461",
-        identificationDocumentType,
-      ),
-      NATIONALITY: await getContactUserFieldListValue(
-        "UF_CRM_1767691283",
-        NATIONALITY,
-      ),
+      IDENTIFICATION_DOCUMENT_TYPE: identificationDocumentType,
+      NATIONALITY: NATIONALITY,
       OCCUPATION: occupation,
       DATE_OF_BIRTH: dateOfBirth,
-      GENDER: await getContactUserFieldListValue(
-        "UF_CRM_1767354222357",
-        gender,
-      ),
+      GENDER: gender,
       ALTERNATIVE_EMAIL: alternativeEmail,
       ALTERNATIVE_PHONE_NUMBER: alternativePhoneNumber,
-      HUMAN_RELATIONSHIP_WITH_NATURE: await getContactUserFieldListValue(
-        "UF_CRM_1767866386",
-        humanRelationshipWithNature,
-      ),
+      HUMAN_RELATIONSHIP_WITH_NATURE: humanRelationshipWithNature,
       BUYER_IMAGE: buyerPictureCNIC
         ? `https://pcicrm.bitrix24.com${buyerPictureCNIC["downloadUrl"]}`
         : null,
