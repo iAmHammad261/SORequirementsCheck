@@ -3,7 +3,7 @@
 
 
 import { processChanges } from "./processChanges.js";
-import { constructLayoutDto } from "./HelperFunctions/constructLayoutDto.js";
+import { constructLayoutDto } from "./ConstructLayout/constructLayoutDto.js";
 
 BX24.init(async function() {
     

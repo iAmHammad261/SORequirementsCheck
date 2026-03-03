@@ -1,13 +1,13 @@
 // function to process changes in lead
 
-import { getProductRows } from "./HelperFunctions/getProductRows.js";
-import { markTheRequirementCompleted } from "./HelperFunctions/markTheRequirementCompleted.js";
-import { markTheRequirementNotCompleted } from "./HelperFunctions/markTheRequirementNotCompleted.js";
-import { getMoreDealData } from "./HelperFunctions/getMoreDealData.js";
-import { getContactData } from "./HelperFunctions/getContactData.js";
-import { changeTheCountOfText} from "./HelperFunctions/changeTheCountOfText.js"
-import { changeTheMessageToSuccess } from "./HelperFunctions/changeTheMessageToSuccess.js";
-import { constructLayoutDto } from "./HelperFunctions/constructLayoutDto.js";
+// import { getProductRows } from "./HelperFunctions/getProductRows.js";
+// import { markTheRequirementCompleted } from "./uiHandling/markTheRequirementCompleted.js";
+// import { markTheRequirementNotCompleted } from "./uiHandling/markTheRequirementNotCompleted.js";
+// import { getMoreDealData } from "./HelperFunctions/getMoreDealData.js";
+// import { getContactData } from "./HelperFunctions/getContactData.js";
+// import { changeTheCountOfText} from "./uiHandling/changeTheCountOfText.js"
+// import { changeTheMessageToSuccess } from "./HelperFunctions/changeTheMessageToSuccess.js";
+import { constructLayoutDto } from "./ConstructLayout/constructLayoutDto.js";
 
 
 export const processChanges = async (layoutDto, dealId) => {
