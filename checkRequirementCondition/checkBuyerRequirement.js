@@ -20,7 +20,7 @@ export const checkBuyerRequirement = async (contactIdList) => {
   if(buyerData.IDENTIFICATION_DOCUMENT_TYPE == 'CNIC')
     mandatoryFields.push("DOCUMENT_SECOND_PAGE");
 
-  var isBuyerInfoComplete = false;
+  var isBuyerInfoComplete = true;
 
   var firstLineOfMessage =
     "Following mandatory fields are missing for the buyer(s): \n";
