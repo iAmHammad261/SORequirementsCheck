@@ -73,6 +73,7 @@ export const constructLayoutDto = async (dealId) => {
                   ? "1) Buyer information (completed)"
                   : `${firstRequirementCheck.message}`,
                 size: "sm",
+                multiline: true,
                 color: firstRequirementCheck.status ? "base_70" : "base_90",
               },
             },
