@@ -1,5 +1,5 @@
 // second condition: check if buyer is present in the deal
-import { callBX24Method } from "../Bitrix24/callBX24Method.js";
+// import { callBX24Method } from "../Bitrix24/callBX24Method.js";
 import { getContactUserFieldListValue } from "./getContactUserFieldListValue.js";
 // import { getBase64Image } from "./getBase64ImageFromUrl.js";
 
