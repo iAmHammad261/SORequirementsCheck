@@ -93,7 +93,7 @@ export const constructLayoutDto = async (dealId) => {
                     properties: {
                       value: "Please complete the remaining steps to proceed.",
                       size: "lg",
-                      color: salesOrderLink ? "success" : "base_90",
+                      color: true ? "success" : "base_90",
                       bold: true,
                     },
                   },
