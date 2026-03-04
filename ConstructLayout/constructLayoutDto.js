@@ -1,5 +1,6 @@
 import { getContactIdOfList } from "../HelperFunctions/getContactIdsListOfDeal.js";
 import { checkBuyerRequirement } from "../checkRequirementCondition/checkBuyerRequirement.js";
+import { checkNomineeRequirement } from "../checkRequirementCondition/checkNomineeRequirement.js";
 
 // const fetchTheTextInfo = (salesOrderLink, isReadyToSync, completedCount, totalRequirements) => {
 
@@ -18,7 +19,8 @@ export const constructLayoutDto = async (dealId) => {
   const contactIdsList = await getContactIdOfList(dealId);
   console.log("Contact IDs List for the Deal:", contactIdsList);
 
-  const firstRequirementCheck = await checkBuyerRequirement(contactIdsList);
+  const buyerRequirementCheck = await checkBuyerRequirement(contactIdsList);
+  const nomineeRequirementCheck = await checkNomineeRequirement(contactIdsList);
 
   // const [numberOfProductRows, additionalDealData] = await Promise.all([
   //   getProductRows(dealId),
@@ -69,12 +71,23 @@ export const constructLayoutDto = async (dealId) => {
             buyer_requirement01: {
               type: "text",
               properties: {
-                value: firstRequirementCheck.status
+                value: buyerRequirementCheck.status
                   ? "1) Buyer information (completed)"
-                  : `${firstRequirementCheck.message}`,
+                  : `${buyerRequirementCheck.message}`,
                 size: "sm",
                 multiline: true,
-                color: firstRequirementCheck.status ? "base_70" : "base_90",
+                color: buyerRequirementCheck.status ? "base_70" : "base_90",
+              },
+            },
+            nominee_requirement02: {
+              type: "text",
+              properties: {
+                value: nomineeRequirementCheck.status
+                  ? "2) Nominee information (completed)"
+                  : `${nomineeRequirementCheck.message}`,
+                size: "sm",
+                multiline: true,
+                color: nomineeRequirementCheck.status ? "base_70" : "base_90",
               },
             },
           },
