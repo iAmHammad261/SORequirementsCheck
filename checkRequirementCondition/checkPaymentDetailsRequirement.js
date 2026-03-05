@@ -12,6 +12,9 @@ export const checkPaymentDetailsRequirement = async (dealId) => {
     getMoreDealData(dealId),
   ]);
 
+
+  console.log("Additional Deal Data for Payment Details Requirement Check:", additionalDealData);
+
   if (productRows.length == 0)
     messageArray.push(`Product`);
 
