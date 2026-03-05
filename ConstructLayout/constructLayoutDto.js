@@ -1,7 +1,7 @@
 import { getContactIdOfList } from "../HelperFunctions/getContactIdsListOfDeal.js";
 import { checkBuyerRequirement } from "../checkRequirementCondition/checkBuyerRequirement.js";
 import { checkNomineeRequirement } from "../checkRequirementCondition/checkNomineeRequirement.js";
-import { checkPaymentDetailsRequirements } from "../checkRequirementCondition/checkPaymentDetailsRequirement.js";
+import { checkPaymentDetailsRequirement } from "../checkRequirementCondition/checkPaymentDetailsRequirement.js";
 
 // const fetchTheTextInfo = (salesOrderLink, isReadyToSync, completedCount, totalRequirements) => {
 
@@ -28,7 +28,7 @@ export const constructLayoutDto = async (dealId) => {
   const [buyerRequirementCheck, nomineeRequirementCheck, paymentDetailsRequirementCheck] = await Promise.all([
     checkBuyerRequirement(contactIdsList),
     checkNomineeRequirement(contactIdsList),
-    checkPaymentDetailsRequirements(dealId)
+    checkPaymentDetailsRequirement(dealId)
   ]);
 
 
