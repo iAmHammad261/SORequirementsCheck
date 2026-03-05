@@ -54,7 +54,8 @@ export const checkPaymentDetailsRequirement = async (dealId) => {
   if (messageArray.length > 0) {
     return {
       status: false,
-      message: messageForPaymentDetails + messageArray.join("\n"),
+      heading: messageForPaymentDetails,
+      message: messageArray.join("\n"),
     };
   } else {
     return {

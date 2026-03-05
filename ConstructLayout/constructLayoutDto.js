@@ -122,11 +122,22 @@ export const constructLayoutDto = async (dealId) => {
                 color: nomineeRequirementCheck.status ? "base_70" : "base_90",
               },
             },
-            payment_details_requirement03: {
+            payment_details_heading: {
               type: "text",
               properties: {
                 value: paymentDetailsRequirementCheck.status
                   ? "3) Payment details (completed)"
+                  : `${paymentDetailsRequirementCheck.heading}`,
+                size: "lg",
+                bold: true,
+                color: paymentDetailsRequirementCheck.status ? "base_70" : "base_90",
+              },
+            },
+            payment_details_requirement03: {
+              type: "text",
+              properties: {
+                value: paymentDetailsRequirementCheck.status
+                  ? ""
                   : `${paymentDetailsRequirementCheck.message}`,
                 size: "sm",
                 multiline: true,
