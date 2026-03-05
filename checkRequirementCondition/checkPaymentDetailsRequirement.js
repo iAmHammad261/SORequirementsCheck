@@ -13,31 +13,31 @@ export const checkPaymentDetailsRequirement = async (dealId) => {
   ]);
 
   if (productRows.length == 0)
-    messageArray.push(`Product is missing from the deal.`);
+    messageArray.push(`Product`);
 
   if (productRows.length > 1 && productRows.PRICE_BRUTTO == 0)
-    messageArray.push(`Price is missing from the product row.`);
+    messageArray.push(`Price`);
 
   if (!additionalDealData.UF_CRM_1767359953127)
-    messageArray.push(`Payment plan is missing from the deal.`);
+    messageArray.push(`Payment plan`);
 
   if (
     additionalDealData.UF_CRM_1767359953127 != "533" &&
     additionalDealData.UF_CRM_1767715497 == null
   )
-    messageArray.push(`Payment plan units are missing from the deal.`);
+    messageArray.push(`Payment plan units`);
 
   if (
     additionalDealData.UF_CRM_1767359953127 != "533" &&
     additionalDealData.UF_CRM_1767727123846 == null
   )
-    messageArray.push(`Downpayment percent is missing from the deal.`);
+    messageArray.push(`Downpayment percent`);
 
   if (
     additionalDealData.UF_CRM_1767359953127 != "533" &&
-    additionalDealData.UF_CRM_1767727123846 == null
+    additionalDealData.UF_CRM_1767360946916 == null
   )
-    messageArray.push(`Downpayment amount is missing from the deal.`);
+    messageArray.push(`Possession percent`);
 
   if (messageArray.length > 0) {
     return {
