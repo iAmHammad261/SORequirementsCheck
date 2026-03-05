@@ -78,12 +78,22 @@ export const constructLayoutDto = async (dealId) => {
                 color: "base_90",
               },
             },
-            // Only Requirement 1 remains
-            buyer_requirement01: {
+            buyer_requirement01_heading: {
               type: "text",
               properties: {
                 value: buyerRequirementCheck.status
                   ? "1) Buyer information (completed)"
+                  : `${buyerRequirementCheck.heading}`,
+                size: "lg",
+                bold: true,
+                color: buyerRequirementCheck.status ? "base_70" : "base_90",
+              },
+            },
+            buyer_requirement01_details: {
+              type: "text",
+              properties: {
+                value: buyerRequirementCheck.status
+                  ? ""
                   : `${buyerRequirementCheck.message}`,
                 size: "sm",
                 multiline: true,
