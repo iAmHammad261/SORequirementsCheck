@@ -39,7 +39,7 @@ export const checkBuyerRequirement = async (contactIdList) => {
         var lowerSpaced = fields.toLowerCase().replace(/_/g, " ");
         var sentenceCase =
           lowerSpaced.charAt(0).toUpperCase() + lowerSpaced.slice(1);
-        missingFieldsMessage += `${sentenceCase},`;
+        missingFieldsMessage += `${sentenceCase} \n`;
       }
     }
 
