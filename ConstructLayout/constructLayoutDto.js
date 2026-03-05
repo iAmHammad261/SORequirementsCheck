@@ -106,8 +106,8 @@ export const constructLayoutDto = async (dealId) => {
                 value: nomineeRequirementCheck.status
                   ? "2) Nominee information (completed)"
                   : `${nomineeRequirementCheck.heading}`,
-                size: "sm",
-                multiline: true,
+                size: "lg",
+                bold: true,
                 color: nomineeRequirementCheck.status ? "base_70" : "base_90",
               },
             },
