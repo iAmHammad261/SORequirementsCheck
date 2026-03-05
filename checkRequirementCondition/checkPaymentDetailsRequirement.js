@@ -32,7 +32,7 @@ export const checkPaymentDetailsRequirement = async (dealId) => {
 
   if (
     additionalDealData.UF_CRM_1767359953127 != "533" &&
-    (additionalDealData.UF_CRM_1767727123846 == null || additionalDealData.UF_CRM_1767727123846 == "")
+    (additionalDealData.UF_CRM_1766573650 == null || additionalDealData.UF_CRM_1766573650 == "")
   )
     messageArray.push(`Downpayment percent`);
 
