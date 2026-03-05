@@ -100,11 +100,22 @@ export const constructLayoutDto = async (dealId) => {
                 color: buyerRequirementCheck.status ? "base_70" : "base_90",
               },
             },
-            nominee_requirement02: {
+            nominee_requirement02_heading: {
               type: "text",
               properties: {
                 value: nomineeRequirementCheck.status
                   ? "2) Nominee information (completed)"
+                  : `${nomineeRequirementCheck.heading}`,
+                size: "sm",
+                multiline: true,
+                color: nomineeRequirementCheck.status ? "base_70" : "base_90",
+              },
+            },
+             nominee_requirement02_details: {
+              type: "text",
+              properties: {
+                value: nomineeRequirementCheck.status
+                  ? ""
                   : `${nomineeRequirementCheck.message}`,
                 size: "sm",
                 multiline: true,
