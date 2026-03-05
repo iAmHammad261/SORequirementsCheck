@@ -42,6 +42,15 @@ export const checkPaymentDetailsRequirement = async (dealId) => {
   )
     messageArray.push(`Possession percent`);
 
+    if(additionalDealData.UF_CRM_1767727123846 == null || additionalDealData.UF_CRM_1767727123846 == "")
+      messageArray.push(`Payment start dates`);
+
+    if(additionalDealData.UF_CRM_1767773115009 == null || additionalDealData.UF_CRM_1767773115009 == "")
+      messageArray.push(`Mode of payment`);
+
+    if(additionalDealData.UF_CRM_1767773157225 == null || additionalDealData.UF_CRM_1767773157225 == "")
+      messageArray.push(`Cheque/Pay order no`)
+
   if (messageArray.length > 0) {
     return {
       status: false,
