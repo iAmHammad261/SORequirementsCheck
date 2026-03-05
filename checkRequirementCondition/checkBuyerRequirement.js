@@ -55,7 +55,7 @@ export const checkBuyerRequirement = async (contactIdList) => {
     return {
       status: false,
       heading: firstLineOfMessage ,
-      message: messageArray.join("\n"),
+      message: messageArray.join(""),
     };
   }
 };
