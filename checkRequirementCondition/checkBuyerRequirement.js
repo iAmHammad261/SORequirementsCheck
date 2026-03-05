@@ -1,24 +1,24 @@
 import { getBuyerData } from "../HelperFunctions/getBuyerData.js";
 
 export const checkBuyerRequirement = async (contactIdList) => {
-  var mandatoryFields = [
-    "NAME",
-    "HUMAN_RELATIONSHIP_NAME",
-    "HUMAN_RELATIONSHIP_WITH_NATURE",
-    "CURRENT_ADDRESS",
-    "PERMANENT_ADDRESS",
-    "EMAIL",
-    "PHONE",
-    "IDENTIFICATION_DOCUMENT_TYPE",
-    "IDENTIFICATION_DOCUMENT_NUMBER",
-    "BUYER_IMAGE",
-    "DOCUMENT_FIRST_PAGE",
-  ];
-  
+  var mandatoryFields = {
+    NAME: "Name",
+    HUMAN_RELATIONSHIP_NAME: "Relationship Name",
+    HUMAN_RELATIONSHIP_WITH_NATURE: "Relationship Nature",
+    CURRENT_ADDRESS: "Current Address",
+    PERMANENT_ADDRESS: "Permanent Address",
+    EMAIL: "Email",
+    PHONE: "Phone",
+    IDENTIFICATION_DOCUMENT_TYPE: "Identification Document Type",
+    IDENTIFICATION_DOCUMENT_NUMBER: "Identification Document Number",
+    BUYER_IMAGE: "Buyer Image",
+    DOCUMENT_FIRST_PAGE: "Document First Page",
+  };
+
   var buyerData = await getBuyerData(contactIdList);
 
-  if(buyerData.IDENTIFICATION_DOCUMENT_TYPE == 'CNIC')
-    mandatoryFields.push("DOCUMENT_SECOND_PAGE");
+  if (buyerData.IDENTIFICATION_DOCUMENT_TYPE == "CNIC")
+    mandatoryFields["DOCUMENT_SECOND_PAGE"] = "Document Second Page";
 
   var isBuyerInfoComplete = true;
 
@@ -29,23 +29,20 @@ export const checkBuyerRequirement = async (contactIdList) => {
     var messageForCurrentBuyer = `${buyer.NAME} is missing the following fields: \n`;
     var missingFieldsMessage = "";
 
-    for (var fields of mandatoryFields) {
+    for (var [key, displayValue] of Object.entries(mandatoryFields)) {
       if (
-        !buyer[fields] ||
-        buyer[fields] === "" ||
-        buyer[fields] === null ||
-        buyer[fields] === undefined
+        !buyer[key] ||
+        buyer[key] === "" ||
+        buyer[key] === null ||
+        buyer[key] === undefined
       ) {
-        var lowerSpaced = fields.toLowerCase().replace(/_/g, " ");
-        var sentenceCase =
-          lowerSpaced.charAt(0).toUpperCase() + lowerSpaced.slice(1);
-        missingFieldsMessage += `${sentenceCase} \n`;
+        missingFieldsMessage += `${displayValue} \n`;
       }
     }
 
     if (missingFieldsMessage) {
       isBuyerInfoComplete = false;
-      messageArray.push(messageForCurrentBuyer + missingFieldsMessage.replace(/,\s*$/, ''));
+      messageArray.push(messageForCurrentBuyer + missingFieldsMessage);
     }
   }
 

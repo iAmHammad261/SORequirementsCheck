@@ -1,20 +1,20 @@
 import { getNomineeData } from "../HelperFunctions/getNomineeData.js";
 
 export const checkNomineeRequirement = async (contactIdList) => {
-  const mandatoryFields = [
-    "NAME",
-    "CNIC",
-    "EMAIL",
-    "PHONE",
-    "RELATIONSHIP",
-    "RELATIONSHIP_NAME",
-    "HUMAN_RELATIONSHIP_WITH_NATURE",
-    "CURRENT_ADDRESS",
-    "NATIONALITY",
-    "NOMINEE_FIRST_PAGE_OF_DOCUMENT",
-    "NOMINEE_PICTURE_CNIC",
-    "IDENTIFICATION_DOCUMENT_TYPE",
-  ];
+  const mandatoryFields = {
+    "NAME": "Name",
+    "CNIC": "CNIC",
+    "EMAIL": "Email",
+    "PHONE": "Phone",
+    "RELATIONSHIP": "Relationship",
+    "RELATIONSHIP_NAME": "Relationship Name",
+    "HUMAN_RELATIONSHIP_WITH_NATURE": "Relationship Nature",
+    "CURRENT_ADDRESS": "Current Address",
+    "NATIONALITY": "Nationality",
+    "NOMINEE_FIRST_PAGE_OF_DOCUMENT": "First Page of Nominee Document",
+    "NOMINEE_PICTURE_CNIC": "Nominee Picture",
+    "IDENTIFICATION_DOCUMENT_TYPE": "Identification Document Type",
+  };
 
   const nomineeData = await getNomineeData(contactIdList);
 
@@ -30,22 +30,20 @@ export const checkNomineeRequirement = async (contactIdList) => {
   for (var nominee of nomineeData) {
     var messageForCurrentNominee = `${nominee.NAME} is missing the following fields: \n`;
     var missingFieldsMessage = "";
-    for (var field of mandatoryFields) {
+    for (var [key, displayValue] of Object.entries(mandatoryFields)) {
       if (
-        !nominee[field] ||
-        nominee[field] === "" ||
-        nominee[field] === null ||
-        nominee[field] === undefined
+        !nominee[key] ||
+        nominee[key] === "" ||
+        nominee[key] === null ||
+        nominee[key] === undefined
       ) {
-        var lowerSpaced = field.toLowerCase().replace(/_/g, " ");
-        var sentenceCase = lowerSpaced.charAt(0).toUpperCase() + lowerSpaced.slice(1);
-        missingFieldsMessage += `${sentenceCase} \n`;
+        missingFieldsMessage += `${displayValue} \n`;
       }
     }
 
     if (missingFieldsMessage) {
       isNomineeInfoComplete = false;
-      messageArray.push(messageForCurrentNominee + missingFieldsMessage.replace(/,\s*$/, ''));
+      messageArray.push(messageForCurrentNominee + missingFieldsMessage);
     }
   }
 
