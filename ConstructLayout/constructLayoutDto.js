@@ -1,6 +1,7 @@
 import { getContactIdOfList } from "../HelperFunctions/getContactIdsListOfDeal.js";
 import { checkBuyerRequirement } from "../checkRequirementCondition/checkBuyerRequirement.js";
 import { checkNomineeRequirement } from "../checkRequirementCondition/checkNomineeRequirement.js";
+import { checkPaymentDetailsRequirements } from "../checkRequirementCondition/checkPaymentDetailsRequirement.js";
 
 // const fetchTheTextInfo = (salesOrderLink, isReadyToSync, completedCount, totalRequirements) => {
 
@@ -19,8 +20,18 @@ export const constructLayoutDto = async (dealId) => {
   const contactIdsList = await getContactIdOfList(dealId);
   console.log("Contact IDs List for the Deal:", contactIdsList);
 
-  const buyerRequirementCheck = await checkBuyerRequirement(contactIdsList);
-  const nomineeRequirementCheck = await checkNomineeRequirement(contactIdsList);
+    // const buyerRequirementCheck = await checkBuyerRequirement(contactIdsList);
+    // const nomineeRequirementCheck = await checkNomineeRequirement(contactIdsList);
+    // const paymentDetailsRequirementCheck = await checkPaymentDetailsRequirements(dealId);
+
+
+  const [buyerRequirementCheck, nomineeRequirementCheck, paymentDetailsRequirementCheck] = await Promise.all([
+    checkBuyerRequirement(contactIdsList),
+    checkNomineeRequirement(contactIdsList),
+    checkPaymentDetailsRequirements(dealId)
+  ]);
+
+
 
   // const [numberOfProductRows, additionalDealData] = await Promise.all([
   //   getProductRows(dealId),
@@ -90,7 +101,19 @@ export const constructLayoutDto = async (dealId) => {
                 color: nomineeRequirementCheck.status ? "base_70" : "base_90",
               },
             },
+            payment_details_requirement03: {
+              type: "text",
+              properties: {
+                value: paymentDetailsRequirementCheck.status
+                  ? "3) Payment details (completed)"
+                  : `${paymentDetailsRequirementCheck.message}`,
+                size: "sm",
+                multiline: true,
+                color: paymentDetailsRequirementCheck.status ? "base_70" : "base_90",
+              },
+            },
           },
+
         },
       },
       section2: {

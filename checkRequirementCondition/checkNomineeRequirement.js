@@ -11,9 +11,7 @@ export const checkNomineeRequirement = async (contactIdList) => {
     "HUMAN_RELATIONSHIP_WITH_NATURE",
     "CURRENT_ADDRESS",
     "NATIONALITY",
-    "RELATIONSHIP",
     "NOMINEE_FIRST_PAGE_OF_DOCUMENT",
-    // "NOMINEE_SECOND_PAGE_OF_DOCUMENT",
     "NOMINEE_PICTURE_CNIC",
     "IDENTIFICATION_DOCUMENT_TYPE",
   ];

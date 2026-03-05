@@ -1,22 +1,34 @@
-export const getProductRows = async (dealId) => {
-    // 1. Wrap the callback logic in a Promise
-    const result = await new Promise((resolve, reject) => {
-        BX24.callMethod(
-            "crm.deal.productrows.get", 
-            { id: dealId }, 
-            function(result) {
-                if (result.error()) {
-                    // Reject the promise if Bitrix reports an error
-                    reject(result.error());
-                } else {
-                    // Resolve the promise with the data
-                    resolve(result.data());
-                }
-            }
-        );
+import { callBX24Method } from "../Bitrix24/callBX24Method.js";
+
+
+export const getProductRows = async( dealId) => {
+    const result = await callBX24Method("crm.deal.productrows.get", {
+        id: dealId
     });
 
-    // 2. Now 'result' holds the actual data array
-    // Check if result exists and has length
-    return (result && result.length > 0) ? result.length : 0;
-};
+    return result;
+}
+
+
+// export const getProductRows = async (dealId) => {
+//     // 1. Wrap the callback logic in a Promise
+//     const result = await new Promise((resolve, reject) => {
+//         BX24.callMethod(
+//             "crm.deal.productrows.get", 
+//             { id: dealId }, 
+//             function(result) {
+//                 if (result.error()) {
+//                     // Reject the promise if Bitrix reports an error
+//                     reject(result.error());
+//                 } else {
+//                     // Resolve the promise with the data
+//                     resolve(result.data());
+//                 }
+//             }
+//         );
+//     });
+
+//     // 2. Now 'result' holds the actual data array
+//     // Check if result exists and has length
+//     return (result && result.length > 0) ? result.length : 0;
+// };
