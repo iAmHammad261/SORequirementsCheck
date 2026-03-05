@@ -26,19 +26,19 @@ export const checkPaymentDetailsRequirement = async (dealId) => {
 
   if (
     additionalDealData.UF_CRM_1767359953127 != "533" &&
-    additionalDealData.UF_CRM_1767715497 == null
+    (additionalDealData.UF_CRM_1767715497 == null || additionalDealData.UF_CRM_1767715497 == "") 
   )
     messageArray.push(`Payment plan units`);
 
   if (
     additionalDealData.UF_CRM_1767359953127 != "533" &&
-    additionalDealData.UF_CRM_1767727123846 == null
+    (additionalDealData.UF_CRM_1767727123846 == null || additionalDealData.UF_CRM_1767727123846 == "")
   )
     messageArray.push(`Downpayment percent`);
 
   if (
     additionalDealData.UF_CRM_1767359953127 != "533" &&
-    additionalDealData.UF_CRM_1767360946916 == null
+    (additionalDealData.UF_CRM_1767360946916 == null || additionalDealData.UF_CRM_1767360946916 == "")
   )
     messageArray.push(`Possession percent`);
 
