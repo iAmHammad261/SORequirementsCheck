@@ -1,55 +1,63 @@
 import { getProductRows } from "../HelperFunctions/getProductRows.js";
-import { getMoreDealData } from "../HelperFunctions/getMoreDealData.js";
 
-
-export const checkPaymentDetailsRequirement = async (dealId) => {
+export const checkPaymentDetailsRequirement = async (dealId, dealData) => {
   var messageForPaymentDetails =
     "Following mandatory fields are missing for the payment details: \n";
   var messageArray = [];
 
-  const [productRows, additionalDealData] = await Promise.all([
-    getProductRows(dealId),
-    getMoreDealData(dealId),
-  ]);
+  const [productRows] = await getProductRows(dealId);
 
+  console.log(
+    "Additional Deal Data for Payment Details Requirement Check:",
+    dealData,
+  );
 
-  console.log("Additional Deal Data for Payment Details Requirement Check:", additionalDealData);
-
-  if (productRows.length == 0)
-    messageArray.push(`Product`);
+  if (productRows.length == 0) messageArray.push(`Product`);
 
   if (productRows.length > 1 && productRows.PRICE_BRUTTO == 0)
     messageArray.push(`Price`);
 
-  if (!additionalDealData.UF_CRM_1767359953127)
+  if (!dealData.UF_CRM_1767359953127)
     messageArray.push(`Payment plan`);
 
   if (
-    additionalDealData.UF_CRM_1767359953127 != "533" &&
-    (additionalDealData.UF_CRM_1767715497 == null || additionalDealData.UF_CRM_1767715497 == "") 
+    dealData.UF_CRM_1767359953127 != "533" &&
+    (dealData.UF_CRM_1767715497 == null ||
+      dealData.UF_CRM_1767715497 == "")
   )
     messageArray.push(`Payment plan units`);
 
   if (
-    additionalDealData.UF_CRM_1767359953127 != "533" &&
-    (additionalDealData.UF_CRM_1766573650 == null || additionalDealData.UF_CRM_1766573650 == "")
+    dealData.UF_CRM_1767359953127 != "533" &&
+    (dealData.UF_CRM_1766573650 == null ||
+      dealData.UF_CRM_1766573650 == "")
   )
     messageArray.push(`Downpayment percent`);
 
   if (
-    additionalDealData.UF_CRM_1767359953127 != "533" &&
-    (additionalDealData.UF_CRM_1767360946916 == null || additionalDealData.UF_CRM_1767360946916 == "")
+    dealData.UF_CRM_1767359953127 != "533" &&
+    (dealData.UF_CRM_1767360946916 == null ||
+      dealData.UF_CRM_1767360946916 == "")
   )
     messageArray.push(`Possession percent`);
 
-    if(additionalDealData.UF_CRM_1767727123846 == null || additionalDealData.UF_CRM_1767727123846 == "")
-      messageArray.push(`Payment start dates`);
+  if (
+    dealData.UF_CRM_1767727123846 == null ||
+    dealData.UF_CRM_1767727123846 == ""
+  )
+    messageArray.push(`Payment start dates`);
 
-    if(additionalDealData.UF_CRM_1767773115009 == null || additionalDealData.UF_CRM_1767773115009 == "")
-      messageArray.push(`Mode of payment`);
+  if (
+    dealData.UF_CRM_1767773115009 == null ||
+    dealData.UF_CRM_1767773115009 == ""
+  )
+    messageArray.push(`Mode of payment`);
 
-    if(additionalDealData.UF_CRM_1767773157225 == null || additionalDealData.UF_CRM_1767773157225 == "")
-      messageArray.push(`Cheque/Pay order no`)
+  if (
+    dealData.UF_CRM_1767773157225 == null ||
+    dealData.UF_CRM_1767773157225 == ""
+  )
+    messageArray.push(`Cheque/Pay order no`);
 
   if (messageArray.length > 0) {
     return {

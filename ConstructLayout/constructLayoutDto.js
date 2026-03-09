@@ -2,7 +2,8 @@ import { getContactIdOfList } from "../HelperFunctions/getContactIdsListOfDeal.j
 import { checkBuyerRequirement } from "../checkRequirementCondition/checkBuyerRequirement.js";
 import { checkNomineeRequirement } from "../checkRequirementCondition/checkNomineeRequirement.js";
 import { checkPaymentDetailsRequirement } from "../checkRequirementCondition/checkPaymentDetailsRequirement.js";
-
+import { checkSalesOrderLink } from "../checkRequirementCondition/checkSalesOrderLink.js";
+import { getMoreDealData } from "../HelperFunctions/getMoreDealData.js";
 // const fetchTheTextInfo = (salesOrderLink, isReadyToSync, completedCount, totalRequirements) => {
 
 //   if(!isReadyToSync)
@@ -24,13 +25,18 @@ export const constructLayoutDto = async (dealId) => {
     // const nomineeRequirementCheck = await checkNomineeRequirement(contactIdsList);
     // const paymentDetailsRequirementCheck = await checkPaymentDetailsRequirements(dealId);
 
+    const dealData = await getMoreDealData(dealId);
+
 
   const [buyerRequirementCheck, nomineeRequirementCheck, paymentDetailsRequirementCheck] = await Promise.all([
     checkBuyerRequirement(contactIdsList),
     checkNomineeRequirement(contactIdsList),
-    checkPaymentDetailsRequirement(dealId)
+    checkPaymentDetailsRequirement(dealId, dealData)
   ]);
 
+  const requirementStatus = buyerRequirementCheck.status && nomineeRequirementCheck.status && paymentDetailsRequirementCheck.status;
+
+  const salesOrderLinkExists = await checkSalesOrderLink(dealData);
 
 
   // const [numberOfProductRows, additionalDealData] = await Promise.all([
@@ -173,8 +179,7 @@ export const constructLayoutDto = async (dealId) => {
         },
       },
     },
-    // The button disappears if the link exists OR if requirements aren't met
-    // primaryButton: isReadyToSync ? { title: "Sync With Netsuite" } : null,
+    primaryButton: (requirementStatus && !salesOrderLinkExists) ? { title: "Sync With Netsuite" } : null,
   };
 
   return layoutDto;
