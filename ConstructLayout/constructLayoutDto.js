@@ -21,23 +21,33 @@ export const constructLayoutDto = async (dealId) => {
   const contactIdsList = await getContactIdOfList(dealId);
   console.log("Contact IDs List for the Deal:", contactIdsList);
 
-    // const buyerRequirementCheck = await checkBuyerRequirement(contactIdsList);
-    // const nomineeRequirementCheck = await checkNomineeRequirement(contactIdsList);
-    // const paymentDetailsRequirementCheck = await checkPaymentDetailsRequirements(dealId);
+  // const buyerRequirementCheck = await checkBuyerRequirement(contactIdsList);
+  // const nomineeRequirementCheck = await checkNomineeRequirement(contactIdsList);
+  // const paymentDetailsRequirementCheck = await checkPaymentDetailsRequirements(dealId);
 
-    const dealData = await getMoreDealData(dealId);
+  const dealData = await getMoreDealData(dealId);
 
-
-  const [buyerRequirementCheck, nomineeRequirementCheck, paymentDetailsRequirementCheck] = await Promise.all([
+  const [
+    buyerRequirementCheck,
+    nomineeRequirementCheck,
+    paymentDetailsRequirementCheck,
+  ] = await Promise.all([
     checkBuyerRequirement(contactIdsList),
     checkNomineeRequirement(contactIdsList),
-    checkPaymentDetailsRequirement(dealId, dealData)
+    checkPaymentDetailsRequirement(dealId, dealData),
   ]);
 
-  const requirementStatus = buyerRequirementCheck.status && nomineeRequirementCheck.status && paymentDetailsRequirementCheck.status;
+  const requirementStatus =
+    buyerRequirementCheck.status &&
+    nomineeRequirementCheck.status &&
+    paymentDetailsRequirementCheck.status;
 
   const salesOrderLinkExists = await checkSalesOrderLink(dealData);
 
+  const stepsRemaining =
+    (!buyerRequirementCheck.status ? 1 : 0) +
+    (!nomineeRequirementCheck.status ? 1 : 0) +
+    (!paymentDetailsRequirementCheck.status ? 1 : 0);
 
   // const [numberOfProductRows, additionalDealData] = await Promise.all([
   //   getProductRows(dealId),
@@ -117,7 +127,7 @@ export const constructLayoutDto = async (dealId) => {
                 color: nomineeRequirementCheck.status ? "base_70" : "base_90",
               },
             },
-             nominee_requirement02_details: {
+            nominee_requirement02_details: {
               type: "text",
               properties: {
                 value: nomineeRequirementCheck.status
@@ -136,7 +146,9 @@ export const constructLayoutDto = async (dealId) => {
                   : `${paymentDetailsRequirementCheck.heading}`,
                 size: "lg",
                 bold: true,
-                color: paymentDetailsRequirementCheck.status ? "base_70" : "base_90",
+                color: paymentDetailsRequirementCheck.status
+                  ? "base_70"
+                  : "base_90",
               },
             },
             payment_details_requirement03: {
@@ -147,11 +159,12 @@ export const constructLayoutDto = async (dealId) => {
                   : `${paymentDetailsRequirementCheck.message}`,
                 size: "sm",
                 multiline: true,
-                color: paymentDetailsRequirementCheck.status ? "base_70" : "base_90",
+                color: paymentDetailsRequirementCheck.status
+                  ? "base_70"
+                  : "base_90",
               },
             },
           },
-
         },
       },
       section2: {
@@ -166,7 +179,11 @@ export const constructLayoutDto = async (dealId) => {
                   textmain: {
                     type: "text",
                     properties: {
-                      value: "Please complete the remaining steps to proceed.",
+                      value: requirementStatus
+                        ? salesOrderLinkExists
+                          ? `Deal is synced with netsuite`
+                          : `Click the button to proceed`
+                        : `Please complete the remaining ${stepsRemaining} steps to proceed.`,
                       size: "lg",
                       color: true ? "success" : "base_90",
                       bold: true,
@@ -179,7 +196,10 @@ export const constructLayoutDto = async (dealId) => {
         },
       },
     },
-    primaryButton: (requirementStatus && !salesOrderLinkExists) ? { title: "Sync With Netsuite" } : null,
+    primaryButton:
+      requirementStatus && !salesOrderLinkExists
+        ? { title: "Sync With Netsuite" }
+        : null,
   };
 
   return layoutDto;
