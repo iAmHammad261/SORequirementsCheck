@@ -4,6 +4,7 @@
 
 import { processChanges } from "./processChanges.js";
 import { constructLayoutDto } from "./ConstructLayout/constructLayoutDto.js";
+import { onButtonClick } from "./onButtonClick/onButtonClick.js";
 
 BX24.init(async function() {
     
@@ -38,7 +39,7 @@ BX24.init(async function() {
         
         BX24.placement.call('setLayout', layoutDto, null);
 
-       BX24.placement.call('bindPrimaryButtonClickCallback', null, ()=> {console.log("Primary button clicked")} )
+       BX24.placement.call('bindPrimaryButtonClickCallback', null, onButtonClick);
 
 
         // await changeTheBlockVisibility("primaryButton", false);
