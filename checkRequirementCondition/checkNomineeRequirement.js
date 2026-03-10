@@ -18,6 +18,15 @@ export const checkNomineeRequirement = async (contactIdList) => {
 
   const nomineeData = await getNomineeData(contactIdList);
 
+
+  if( nomineeData.length == 0){
+    return {
+      status: false,
+      heading: "No nominee linked",
+      message: "No nominee is linked to the deal. Please link a nominee to proceed.",
+    }
+  }
+
   if (nomineeData.IDENTIFICATION_DOCUMENT_TYPE == "CNIC")
     mandatoryFields.push("NOMINEE_SECOND_PAGE_OF_DOCUMENT");
 

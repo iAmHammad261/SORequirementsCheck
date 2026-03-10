@@ -17,6 +17,15 @@ export const checkBuyerRequirement = async (contactIdList) => {
 
   var buyerData = await getBuyerData(contactIdList);
 
+
+  if( buyerData.length == 0){
+    return {
+      status: false,
+      heading: "No buyer linked",
+      message: "No buyer is linked to the deal. Please link a buyer to proceed.",
+    }
+  }
+
   if (buyerData.IDENTIFICATION_DOCUMENT_TYPE == "CNIC")
     mandatoryFields["DOCUMENT_SECOND_PAGE"] = "Document Second Page";
 

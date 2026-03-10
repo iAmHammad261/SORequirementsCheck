@@ -1,10 +1,7 @@
-// Ensure Bitrix24 library is initialized
-
-
 
 import { processChanges } from "./processChanges.js";
 import { constructLayoutDto } from "./ConstructLayout/constructLayoutDto.js";
-import { onButtonClick } from "./onButtonClick/onButtonClick.js";
+import { onButtonClick } from "./onButtonClick/onPrimaryButtonClick.js";
 
 BX24.init(async function() {
     
