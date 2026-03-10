@@ -7,7 +7,7 @@ export const checkPaymentDetailsRequirement = async (dealId, dealData) => {
 
   var productData = {};
 
-  const [productRows] = await getProductRows(dealId);
+  const productRows = await getProductRows(dealId);
 
   console.log("Product Rows for the Deal:", productRows);
 
