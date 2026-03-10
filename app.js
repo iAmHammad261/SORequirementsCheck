@@ -38,9 +38,7 @@ BX24.init(async function() {
         
         BX24.placement.call('setLayout', layoutDto, null);
 
-        BX24.placement.call('setPrimaryButtonState', {}, ()=>{
-            console.log("Primary button is clicked")
-        })
+       BX24.placement.call('bindPrimaryButtonClickCallback', null, ()=> {console.log("Primary button clicked")} )
 
 
         // await changeTheBlockVisibility("primaryButton", false);
