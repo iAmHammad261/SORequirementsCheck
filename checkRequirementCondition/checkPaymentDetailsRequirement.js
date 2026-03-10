@@ -5,6 +5,8 @@ export const checkPaymentDetailsRequirement = async (dealId, dealData) => {
     "Following mandatory fields are missing for the payment details: \n";
   var messageArray = [];
 
+  var productData = {};
+
   const [productRows] = await getProductRows(dealId);
 
   console.log(
@@ -59,6 +61,25 @@ export const checkPaymentDetailsRequirement = async (dealId, dealData) => {
   )
     messageArray.push(`Cheque/Pay order no`);
 
+
+    productData.productID = productRows.length > 0 ? productRows[0].PRODUCT_ID : null;
+
+    productData.price = productRows.length > 0 ? productRows[0].PRICE_BRUTTO : null;
+
+    productData.paymentPlan = dealData.UF_CRM_1767359953127;
+
+    productData.paymentPlanUnits = dealData.UF_CRM_1767715497;
+
+    productData.downpaymentPercent = dealData.UF_CRM_1766573650;
+
+    productData.possessionPercent = dealData.UF_CRM_1767360946916;
+
+    productData.paymentStartDates = dealData.UF_CRM_1767727123846;
+
+    productData.modeOfPayment = dealData.UF_CRM_1767773115009;
+
+    productData.chequePayOrderNo = dealData.UF_CRM_1767773157225;
+
   if (messageArray.length > 0) {
     return {
       status: false,
@@ -68,6 +89,7 @@ export const checkPaymentDetailsRequirement = async (dealId, dealData) => {
   } else {
     return {
       status: true,
+      data: productData,
       message: "Payment details are complete.",
     };
   }

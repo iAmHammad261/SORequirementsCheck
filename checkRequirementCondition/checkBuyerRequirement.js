@@ -58,6 +58,7 @@ export const checkBuyerRequirement = async (contactIdList) => {
   if (isBuyerInfoComplete) {
     return {
       status: true,
+      data: buyerData,
       message: "Buyer information is complete.",
     };
   } else {

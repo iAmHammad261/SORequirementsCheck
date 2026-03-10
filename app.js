@@ -29,14 +29,14 @@ BX24.init(async function() {
 
         // CHECK 3: Define Layout
 
-        var layoutDto = await constructLayoutDto(dealId);
+        var {layoutDto, buyerData, nomineeData, paymentDetails} = await constructLayoutDto(dealId);
 
         // CHECK 4: Execute Call
         
         
         BX24.placement.call('setLayout', layoutDto, null);
 
-       BX24.placement.call('bindPrimaryButtonClickCallback', null, onButtonClick);
+       BX24.placement.call('bindPrimaryButtonClickCallback', null, (event) => onButtonClick(buyerData, nomineeData, paymentDetails));
 
 
         // await changeTheBlockVisibility("primaryButton", false);

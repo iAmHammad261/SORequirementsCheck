@@ -28,7 +28,7 @@ export const checkNomineeRequirement = async (contactIdList) => {
   }
 
   if (nomineeData.IDENTIFICATION_DOCUMENT_TYPE == "CNIC")
-    mandatoryFields.push("NOMINEE_SECOND_PAGE_OF_DOCUMENT");
+    mandatoryFields["NOMINEE_SECOND_PAGE_OF_DOCUMENT"] = "Second Page of Nominee Document";
 
   var isNomineeInfoComplete = true;
 
@@ -60,6 +60,7 @@ export const checkNomineeRequirement = async (contactIdList) => {
     if (isNomineeInfoComplete) {
         return {
             status: true,
+            data: nomineeData,
             message: "Nominee information is complete.",
         };
     }

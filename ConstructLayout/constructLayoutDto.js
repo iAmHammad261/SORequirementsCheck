@@ -18,10 +18,7 @@ import { getMoreDealData } from "../HelperFunctions/getMoreDealData.js";
 // }
 
 export const constructLayoutDto = async (dealId) => {
-
-
-  BX24.placement.call('lock'); 
-
+  BX24.placement.call("lock");
 
   const contactIdsList = await getContactIdOfList(dealId);
   console.log("Contact IDs List for the Deal:", contactIdsList);
@@ -207,8 +204,12 @@ export const constructLayoutDto = async (dealId) => {
         : null,
   };
 
+  BX24.placement.call("unlock");
 
-  BX24.placement.call('unlock');
-
-  return layoutDto;
+  return {
+    layoutDto,
+    buyerData: buyerRequirementCheck.data,
+    nomineeData: nomineeRequirementCheck.data,
+    paymentDetails: paymentDetailsRequirementCheck.data,
+  };
 };
