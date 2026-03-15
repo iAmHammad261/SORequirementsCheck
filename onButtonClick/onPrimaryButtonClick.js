@@ -6,4 +6,15 @@ export const onButtonClick = async (buyerData, nomineeData, paymentDetails) => {
     console.log("Nominee Data:", nomineeData);
     console.log("Payment Details:", paymentDetails);
 
+
+    const combinedData = {
+        buyerData,
+        nomineeData,
+        paymentDetails
+    };
+
+    console.log("Combined Data to send to backend:", combinedData);
+
+    
+
 }
