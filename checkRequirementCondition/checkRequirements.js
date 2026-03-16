@@ -21,6 +21,16 @@ const collectData = async (contactIdList, dealID, dealData) => {
     }
 }
 
+const extractCategoryErrors = (issues, categoryName) => {
+    const categoryIssues = issues.filter(issue => issue.path[0] === categoryName);
+    if (categoryIssues.length === 0) return null; 
+    
+    return categoryIssues.map(err => {
+        const field = err.path.slice(1).join('.'); 
+        return field ? `- ${field}: ${err.message}` : `- ${err.message}`;
+    }).join('\n');
+};
+
 
 export const checkRequirements = async(contactIdList, dealID, dealData) => {
     const collectedData = await collectData(contactIdList, dealID, dealData);
@@ -30,17 +40,27 @@ export const checkRequirements = async(contactIdList, dealID, dealData) => {
     const validationResult = bookingFormDataSchema.safeParse(collectedData);
 
     if (!validationResult.success) {
-        const errorMessages = validationResult.error.issues.map(err => err.message).join('\n');
-        console.error("Validation errors:", errorMessages);
+        const issues = validationResult.error.issues;
+        
+        const errors = {
+            buyerData: extractCategoryErrors(issues, 'buyerData'),
+            nomineeData: extractCategoryErrors(issues, 'nomineeData'),
+            paymentDetails: extractCategoryErrors(issues, 'paymentDetails')
+        };
+
+        console.error("Validation errors grouped:", errors);
+        
         return {
             success: false,
-            message: `Validation failed with the following errors:\n${errorMessages}`
+            data: collectedData,
+            errors: errors 
         };
     }
 
     return {
         success: true,
-        data: collectedData
+        data: collectedData,
+        errors: { buyerData: null, nomineeData: null, paymentDetails: null }
     };
 
 

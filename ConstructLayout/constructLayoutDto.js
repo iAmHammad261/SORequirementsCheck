@@ -1,22 +1,7 @@
 import { getContactIdOfList } from "../HelperFunctions/getContactIdsListOfDeal.js";
-import { checkBuyerRequirement } from "../checkRequirementCondition/checkBuyerRequirement.js";
-import { checkNomineeRequirement } from "../checkRequirementCondition/checkNomineeRequirement.js";
-import { checkPaymentDetailsRequirement } from "../checkRequirementCondition/checkPaymentDetailsRequirement.js";
 import { checkSalesOrderLink } from "../checkRequirementCondition/checkSalesOrderLink.js";
 import { getMoreDealData } from "../HelperFunctions/getMoreDealData.js";
 import { checkRequirements } from "../checkRequirementCondition/checkRequirements.js";
-// const fetchTheTextInfo = (salesOrderLink, isReadyToSync, completedCount, totalRequirements) => {
-
-//   if(!isReadyToSync)
-//     return `Steps remaining to complete sales order checklist: ${completedCount} / ${totalRequirements}`
-
-//   if(isReadyToSync && salesOrderLink == "")
-//     return "Deal is ready to be synced with Netsuite."
-
-//   if(salesOrderLink && salesOrderLink !== "")
-//     return "Sync has been completed successfully with Netsuite."
-
-// }
 
 export const constructLayoutDto = async (dealId) => {
   BX24.placement.call("lock");
@@ -24,68 +9,27 @@ export const constructLayoutDto = async (dealId) => {
   const contactIdsList = await getContactIdOfList(dealId);
   console.log("Contact IDs List for the Deal:", contactIdsList);
 
-  // const buyerRequirementCheck = await checkBuyerRequirement(contactIdsList);
-  // const nomineeRequirementCheck = await checkNomineeRequirement(contactIdsList);
-  // const paymentDetailsRequirementCheck = await checkPaymentDetailsRequirements(dealId);
-
-
-
-
   const dealData = await getMoreDealData(dealId);
 
-  // const [
-  //   buyerRequirementCheck,
-  //   nomineeRequirementCheck,
-  //   paymentDetailsRequirementCheck,
-  // ] = await Promise.all([
-  //   checkBuyerRequirement(contactIdsList),
-  //   checkNomineeRequirement(contactIdsList),
-  //   checkPaymentDetailsRequirement(dealId, dealData),
-  // ]);
-
+  // Call the single validation function
   const {
-    success: requirementsCheckSuccess,
-    data: requirementsCheckData,
-    message: requirementsCheckMessage,
+    success: requirementStatus,
+    data: collectedData,
+    errors
   } = await checkRequirements(contactIdsList, dealId, dealData);
 
-  const requirementStatus =
-    buyerRequirementCheck.status &&
-    nomineeRequirementCheck.status &&
-    paymentDetailsRequirementCheck.status;
+  // Determine individual statuses based on the absence of errors
+  const buyerStatus = !errors.buyerData;
+  const nomineeStatus = !errors.nomineeData;
+  const paymentStatus = !errors.paymentDetails;
 
   const salesOrderLinkExists = await checkSalesOrderLink(dealData);
 
+  // Calculate remaining steps dynamically
   const stepsRemaining =
-    (!buyerRequirementCheck.status ? 1 : 0) +
-    (!nomineeRequirementCheck.status ? 1 : 0) +
-    (!paymentDetailsRequirementCheck.status ? 1 : 0);
-
-  // const [numberOfProductRows, additionalDealData] = await Promise.all([
-  //   getProductRows(dealId),
-  //   getMoreDealData(dealId)
-  // ]);
-
-  // // Define salesOrderLink early to use in logic
-  // const salesOrderLink = additionalDealData["UF_CRM_1767161134530"];
-
-  // let contactData = {};
-  // if (additionalDealData["CONTACT_ID"]) {
-  //   contactData = await getContactData(additionalDealData["CONTACT_ID"]);
-  // }
-
-  // // --- Logic for Requirements ---
-  // const req1 = numberOfProductRows > 0;
-  // const req2 = contactData['HAS_EMAIL'] === 'Y' && contactData['HAS_PHONE'] === 'Y' && additionalDealData['UF_CRM_1766983873725'] != "";
-  // const req3 = !!(additionalDealData['UF_CRM_1766573650'] && additionalDealData['UF_CRM_1767092446606']);
-  // const req4 = additionalDealData['STAGE_ID'] === "WON";
-
-  // // Calculate the counter
-  // const completedCount = [req1, req2, req3, req4].filter(Boolean).length;
-  // const totalRequirements = 4;
-
-  // // Logic: All steps done AND no link exists yet
-  // const isReadyToSync = (completedCount === totalRequirements) && (!salesOrderLink || salesOrderLink === "");
+    (!buyerStatus ? 1 : 0) +
+    (!nomineeStatus ? 1 : 0) +
+    (!paymentStatus ? 1 : 0);
 
   const layoutDto = {
     blocks: {
@@ -94,8 +38,7 @@ export const constructLayoutDto = async (dealId) => {
         properties: {
           type: "withBorder",
           title: "Welcome to Our Custom App",
-          imageSrc:
-            "https://logowik.com/content/uploads/images/bitrix241512.jpg",
+          imageSrc: "https://logowik.com/content/uploads/images/bitrix241512.jpg",
           blocks: {
             mainHeading: {
               type: "text",
@@ -106,74 +49,70 @@ export const constructLayoutDto = async (dealId) => {
                 color: "base_90",
               },
             },
+            
+            // BUYER BLOCK
             buyer_requirement01_heading: {
               type: "text",
               properties: {
-                value: buyerRequirementCheck.status
+                value: buyerStatus
                   ? "1) Buyer information (completed)"
-                  : `${buyerRequirementCheck.heading}`,
+                  : "1) Buyer information (Action Required)",
                 size: "lg",
                 bold: true,
-                color: buyerRequirementCheck.status ? "base_70" : "base_90",
+                color: buyerStatus ? "base_70" : "base_90",
               },
             },
             buyer_requirement01_details: {
               type: "text",
               properties: {
-                value: buyerRequirementCheck.status
-                  ? ""
-                  : `${buyerRequirementCheck.message}`,
+                value: buyerStatus ? "" : `Missing/Invalid Data:\n${errors.buyerData}`,
                 size: "sm",
                 multiline: true,
-                color: buyerRequirementCheck.status ? "base_70" : "base_90",
+                color: buyerStatus ? "base_70" : "base_90",
               },
             },
+
+            // NOMINEE BLOCK
             nominee_requirement02_heading: {
               type: "text",
               properties: {
-                value: nomineeRequirementCheck.status
+                value: nomineeStatus
                   ? "2) Nominee information (completed)"
-                  : `${nomineeRequirementCheck.heading}`,
+                  : "2) Nominee information (Action Required)",
                 size: "lg",
                 bold: true,
-                color: nomineeRequirementCheck.status ? "base_70" : "base_90",
+                color: nomineeStatus ? "base_70" : "base_90",
               },
             },
             nominee_requirement02_details: {
               type: "text",
               properties: {
-                value: nomineeRequirementCheck.status
-                  ? ""
-                  : `${nomineeRequirementCheck.message}`,
+                value: nomineeStatus ? "" : `Missing/Invalid Data:\n${errors.nomineeData}`,
                 size: "sm",
                 multiline: true,
-                color: nomineeRequirementCheck.status ? "base_70" : "base_90",
+                color: nomineeStatus ? "base_70" : "base_90",
               },
             },
+
+            // PAYMENT BLOCK
             payment_details_heading: {
               type: "text",
               properties: {
-                value: paymentDetailsRequirementCheck.status
+                value: paymentStatus
                   ? "3) Payment details (completed)"
-                  : `${paymentDetailsRequirementCheck.heading}`,
+                  : "3) Payment details (Action Required)",
                 size: "lg",
                 bold: true,
-                color: paymentDetailsRequirementCheck.status
-                  ? "base_70"
-                  : "base_90",
+                color: paymentStatus ? "base_70" : "base_90",
               },
             },
             payment_details_requirement03: {
               type: "text",
               properties: {
-                value: paymentDetailsRequirementCheck.status
-                  ? ""
-                  : `${paymentDetailsRequirementCheck.message}`,
+                value: paymentStatus ? "" : `Missing/Invalid Data:\n${errors.paymentDetails}`,
                 size: "sm",
                 multiline: true,
-                color: paymentDetailsRequirementCheck.status
-                  ? "base_70"
-                  : "base_90",
+                color: paymentStatus ? "base_70" : "base_90",
               },
             },
           },
@@ -197,7 +136,7 @@ export const constructLayoutDto = async (dealId) => {
                           : `Click the button to proceed`
                         : `Please complete the remaining ${stepsRemaining} steps to proceed.`,
                       size: "lg",
-                      color: true ? "success" : "base_90",
+                      color: requirementStatus ? "success" : "base_90",
                       bold: true,
                     },
                   },
@@ -218,8 +157,8 @@ export const constructLayoutDto = async (dealId) => {
 
   return {
     layoutDto,
-    buyerData: buyerRequirementCheck.data,
-    nomineeData: nomineeRequirementCheck.data,
-    paymentDetails: paymentDetailsRequirementCheck.data,
+    buyerData: collectedData?.buyerData || null,
+    nomineeData: collectedData?.nomineeData || null,
+    paymentDetails: collectedData?.paymentDetails || null,
   };
 };
