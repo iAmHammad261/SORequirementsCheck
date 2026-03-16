@@ -114,7 +114,7 @@ const paymentDetailsSchema = z
         val === "" || val === null || val === undefined ? undefined : val,
       z.coerce
         .number({
-          message: "Payment Plan Units must be a valid number",
+          message: "Payment Plan Units can not be empty",
         })
         .min(1, "Payment Plan Units cannot be zero")
         .optional()
