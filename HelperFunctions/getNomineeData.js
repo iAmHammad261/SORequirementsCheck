@@ -70,7 +70,7 @@ export const getNomineeData = async (contactIdsList) => {
       IDENTIFICATION_DOCUMENT_NUMBER: cnic,
       EMAIL: hasEmail == "Y" ? email[0].VALUE : "",
       PHONE: hasPhone == "Y" ? phone[0].VALUE : "",
-      RELATIONSHIP_NAME: relationshipName,
+      HUMAN_RELATIONSHIP_NAME: relationshipName,
       HUMAN_RELATIONSHIP_WITH_NATURE: humanRelationshipWithNature,
       CURRENT_ADDRESS: currentAddress,
       NATIONALITY: nationality,
