@@ -12,6 +12,8 @@ import { constructLayoutDto } from "./ConstructLayout/constructLayoutDto.js";
 
 export const processChanges = async (layoutDto, dealId) => {
 
+    BX24.placement.call("lock");
+
     // var noOfRequirementsCompleted = 0;
     // var totalNumberOfRequirements = 4;
 
@@ -94,6 +96,7 @@ export const processChanges = async (layoutDto, dealId) => {
     BX24.placement.call('setLayout', layoutDto, null);
 
 
+    BX24.placement.call("unlock");
 
 
 }
