@@ -67,7 +67,7 @@ export const getNomineeData = async (contactIdsList) => {
 
     objectToHoldNomineeData = {
       NAME: `${name}${secondName ? " " + secondName : ""}${lastName ? " " + lastName : ""}`.trim(),
-      CNIC: cnic,
+      IDENTIFICATION_DOCUMENT_NUMBER: cnic,
       EMAIL: hasEmail == "Y" ? email[0].VALUE : "",
       PHONE: hasPhone == "Y" ? phone[0].VALUE : "",
       RELATIONSHIP_NAME: relationshipName,
@@ -75,13 +75,13 @@ export const getNomineeData = async (contactIdsList) => {
       CURRENT_ADDRESS: currentAddress,
       NATIONALITY: nationality,
       RELATIONSHIP: relationship,
-      NOMINEE_FIRST_PAGE_OF_DOCUMENT: nomineeFirstPageOfDocument
+      DOCUMENT_FIRST_PAGE: nomineeFirstPageOfDocument
         ? `https://pcicrm.bitrix24.com${nomineeFirstPageOfDocument["downloadUrl"]}`
         : null,
-      NOMINEE_SECOND_PAGE_OF_DOCUMENT: nomineeSecondPageOfDocument
+      DOCUMENT_SECOND_PAGE: nomineeSecondPageOfDocument
         ? `https://pcicrm.bitrix24.com${nomineeSecondPageOfDocument["downloadUrl"]}`
         : null,
-      NOMINEE_PICTURE_CNIC: nomineePictureCNIC
+      NOMINEE_IMAGE: nomineePictureCNIC
         ? `https://pcicrm.bitrix24.com${nomineePictureCNIC["downloadUrl"]}`
         : null,
       DOCUMENT_TYPE: documentType,
