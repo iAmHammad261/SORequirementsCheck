@@ -25,6 +25,8 @@ const collectData = async (contactIdList, dealID, dealData) => {
 export const checkRequirements = async(contactIdList, dealID, dealData) => {
     const collectedData = await collectData(contactIdList, dealID, dealData);
 
+    console.log("Collected Data for Validation:", collectedData);
+
     const validationResult = bookingFormDataSchema.safeParse(collectedData);
 
     if (!validationResult.success) {
