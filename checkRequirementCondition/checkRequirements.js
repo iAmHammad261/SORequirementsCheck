@@ -46,7 +46,7 @@ const extractCategoryErrors = (issues, categoryName, displayLabel) => {
     if (isArrayData) {
         for (const [index, messages] of Object.entries(groupedErrors)) {
             if (index !== 'general') {
-                formattedString += `Missing/Invalid Data for ${displayLabel} ${index + 1}:\n`;
+                formattedString += `Missing/Invalid Data for ${displayLabel} ${parseInt(index) + 1}:\n`;
                 messages.forEach(msg => {
                     formattedString += `- ${msg}\n`;
                 });
@@ -77,9 +77,9 @@ export const checkRequirements = async(contactIdList, dealID, dealData) => {
         const issues = validationResult.error.issues;
         
         const errors = {
-            buyerData: extractCategoryErrors(issues, 'buyerData'),
-            nomineeData: extractCategoryErrors(issues, 'nomineeData'),
-            paymentDetails: extractCategoryErrors(issues, 'paymentDetails')
+            buyerData: extractCategoryErrors(issues, 'buyerData', 'Buyer'),
+            nomineeData: extractCategoryErrors(issues, 'nomineeData', 'Nominee'),
+            paymentDetails: extractCategoryErrors(issues, 'paymentDetails', 'Payment Details')
         };
 
         console.error("Validation errors grouped:", errors);
