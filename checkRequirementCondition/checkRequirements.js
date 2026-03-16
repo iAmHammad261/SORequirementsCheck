@@ -28,7 +28,7 @@ export const checkRequirements = async(contactIdList, dealID, dealData) => {
     const validationResult = bookingFormDataSchema.safeParse(collectedData);
 
     if (!validationResult.success) {
-        const errorMessages = validationResult.error.errors.map(err => err.message).join('\n');
+        const errorMessages = validationResult.error.issues.map(err => err.message).join('\n');
         console.error("Validation errors:", errorMessages);
         return {
             success: false,
