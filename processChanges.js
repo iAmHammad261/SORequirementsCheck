@@ -91,11 +91,11 @@ export const processChanges = async (layoutDto, dealId) => {
     //     }
     // }
 
-    var layoutDto = await constructLayoutDto(dealId);
+    var {layoutDto : newLayoutDto} = await constructLayoutDto(dealId);
 
     BX24.placement.call("unlock");
 
-    BX24.placement.call('setLayout', layoutDto, null);
+    BX24.placement.call('setLayout', newLayoutDto, null);
 
 
 
