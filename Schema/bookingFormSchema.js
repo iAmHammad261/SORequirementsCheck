@@ -79,8 +79,6 @@ const basePersonSchema = z.object({
         : "Invalid email format",
   }),
   PHONE: phoneSchema,
-  GENDER: requiredNumber("Gender"),
-  OCCUPATION: requiredString("Occupation"),
   NATIONALITY: requiredNumber("Nationality"),
   DOCUMENT_FIRST_PAGE: requiredUrl("First Document Page"),
   DOCUMENT_SECOND_PAGE: z
@@ -99,6 +97,8 @@ const buyerDataSchema = basePersonSchema.extend({
   ALTERNATIVE_PHONE_NUMBER: phoneSchema.or(z.literal("")).nullable().optional(),
   DATE_OF_BIRTH: requiredDate("Date of Birth"),
   BUYER_IMAGE: requiredUrl("Buyer Image"),
+  GENDER: requiredNumber("Gender"),
+  OCCUPATION: requiredString("Occupation"),
 });
 
 const nomineeDataSchema = basePersonSchema.extend({
