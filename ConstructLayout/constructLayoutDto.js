@@ -4,6 +4,7 @@ import { checkNomineeRequirement } from "../checkRequirementCondition/checkNomin
 import { checkPaymentDetailsRequirement } from "../checkRequirementCondition/checkPaymentDetailsRequirement.js";
 import { checkSalesOrderLink } from "../checkRequirementCondition/checkSalesOrderLink.js";
 import { getMoreDealData } from "../HelperFunctions/getMoreDealData.js";
+import { checkRequirements } from "../checkRequirementCondition/checkRequirements.js";
 // const fetchTheTextInfo = (salesOrderLink, isReadyToSync, completedCount, totalRequirements) => {
 
 //   if(!isReadyToSync)
@@ -27,17 +28,26 @@ export const constructLayoutDto = async (dealId) => {
   // const nomineeRequirementCheck = await checkNomineeRequirement(contactIdsList);
   // const paymentDetailsRequirementCheck = await checkPaymentDetailsRequirements(dealId);
 
+
+
+
   const dealData = await getMoreDealData(dealId);
 
-  const [
-    buyerRequirementCheck,
-    nomineeRequirementCheck,
-    paymentDetailsRequirementCheck,
-  ] = await Promise.all([
-    checkBuyerRequirement(contactIdsList),
-    checkNomineeRequirement(contactIdsList),
-    checkPaymentDetailsRequirement(dealId, dealData),
-  ]);
+  // const [
+  //   buyerRequirementCheck,
+  //   nomineeRequirementCheck,
+  //   paymentDetailsRequirementCheck,
+  // ] = await Promise.all([
+  //   checkBuyerRequirement(contactIdsList),
+  //   checkNomineeRequirement(contactIdsList),
+  //   checkPaymentDetailsRequirement(dealId, dealData),
+  // ]);
+
+  const {
+    success: requirementsCheckSuccess,
+    data: requirementsCheckData,
+    message: requirementsCheckMessage,
+  } = await checkRequirements(contactIdsList, dealId, dealData);
 
   const requirementStatus =
     buyerRequirementCheck.status &&
