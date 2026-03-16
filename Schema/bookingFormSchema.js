@@ -128,7 +128,7 @@ const paymentDetailsSchema = z
     PAYMENT_START_DATE: requiredDate("Payment Start Date"),
   })
   .superRefine((data, ctx) => {
-    if (Number(data.PAYMENT_PLAN) !== 537) {
+    if (Number(data.PAYMENT_PLAN) !== 533) {
       
       const validateNumericField = (val, path, label) => {
         const num = Number(val);
