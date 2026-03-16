@@ -65,7 +65,7 @@ export const constructLayoutDto = async (dealId) => {
             buyer_requirement01_details: {
               type: "text",
               properties: {
-                value: buyerStatus ? "" : `Missing/Invalid Data:\n${errors.buyerData}`,
+                value: buyerStatus ? "" : errors.buyerData,
                 size: "sm",
                 multiline: true,
                 color: buyerStatus ? "base_70" : "base_90",
@@ -87,7 +87,7 @@ export const constructLayoutDto = async (dealId) => {
             nominee_requirement02_details: {
               type: "text",
               properties: {
-                value: nomineeStatus ? "" : `Missing/Invalid Data:\n${errors.nomineeData}`,
+                value: nomineeStatus ? "" : errors.nomineeData,
                 size: "sm",
                 multiline: true,
                 color: nomineeStatus ? "base_70" : "base_90",
@@ -109,7 +109,7 @@ export const constructLayoutDto = async (dealId) => {
             payment_details_requirement03: {
               type: "text",
               properties: {
-                value: paymentStatus ? "" : `Missing/Invalid Data:\n${errors.paymentDetails}`,
+                value: paymentStatus ? "" : errors.paymentDetails,
                 size: "sm",
                 multiline: true,
                 color: paymentStatus ? "base_70" : "base_90",
