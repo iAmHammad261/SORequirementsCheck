@@ -18,15 +18,17 @@ const requiredString = (label) =>
 
 const requiredNumber = (label, min = 1) =>
   z.preprocess(
-    (val) => (val === "" ? undefined : val),
-    z.coerce
-      .number({
-        error: (iss) =>
-          iss.input == null
-            ? `${label} is required`
-            : `${label} must be a valid number`,
-      })
-      .min(min, `${label} is required`)
+    (val) => {
+      if (val === "" || val === null || val === undefined) return undefined;
+      return Number(val);
+    },
+    z.number({
+      error: (iss) =>
+        iss.input == undefined || iss.input === null || iss.input === ""
+          ? `${label} is required`
+          : `${label} must be a valid number`,
+    })
+    .min(min, `${label} is required`)
   );
 
 const requiredUrl = (label) =>
