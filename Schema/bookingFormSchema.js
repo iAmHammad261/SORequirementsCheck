@@ -131,27 +131,13 @@ const paymentDetailsSchema = z
     if (Number(data.PAYMENT_PLAN) !== 533) {
       
       const validateNumericField = (val, path, label) => {
-        const num = Number(val);
-
         if (val === undefined || val === null || val === "") {
           ctx.addIssue({
             code: "custom",
             message: `${label} is required for this payment mode`,
             path: [path],
           });
-        } else if (isNaN(num)) {
-          ctx.addIssue({
-            code: "custom",
-            message: `${label} must be a valid number`,
-            path: [path],
-          });
-        } else if (num < 1 || num > 100) {
-          ctx.addIssue({
-            code: "custom",
-            message: `${label} must be between 1 and 100`,
-            path: [path],
-          });
-        }
+        } 
       };
 
       validateNumericField(
