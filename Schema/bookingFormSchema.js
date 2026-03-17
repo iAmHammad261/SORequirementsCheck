@@ -6,6 +6,8 @@ import { z } from "https://esm.sh/zod";
 
 const phoneRegexWithSpaces = /^\+?[0-9\s]{10,20}$/;
 
+
+
 const requiredString = (label) =>
   z
     .string({
@@ -30,6 +32,14 @@ const requiredNumber = (label, min = 1) =>
     })
     .min(min, `${label} is required`)
   );
+
+  const cleanAddressString = (label) =>
+  z.preprocess((val) => {
+    if (typeof val === "string") {
+      return val.split("|;|")[0].trim();
+    }
+    return val;
+  }, requiredString(label));
 
 const requiredUrl = (label) =>
   z.url({
@@ -69,7 +79,7 @@ const basePersonSchema = z.object({
   NAME: requiredString("Name"),
   HUMAN_RELATIONSHIP_WITH_NATURE: requiredNumber("Relationship Type"),
   HUMAN_RELATIONSHIP_NAME: requiredString("Relationship Name"),
-  CURRENT_ADDRESS: requiredString("Current Address"),
+  CURRENT_ADDRESS: cleanAddressString("Current Address"),
   IDENTIFICATION_DOCUMENT_TYPE: requiredNumber("Identification Document Type"),
   IDENTIFICATION_DOCUMENT_NUMBER: requiredString(
     "Identification Document Number"
@@ -91,7 +101,7 @@ const basePersonSchema = z.object({
 });
 
 const buyerDataSchema = basePersonSchema.extend({
-  PERMANENT_ADDRESS: requiredString("Permanent Address"),
+  PERMANENT_ADDRESS: cleanAddressString("Permanent Address"),
   ALTERNATIVE_EMAIL: z
     .email("Alternative email must be a valid email format")
     .nullable()
