@@ -4,7 +4,7 @@
 
 import { z } from "https://esm.sh/zod";
 
-const phoneRegexWithSpaces = /^\+?[0-9\s]{10,20}$/;
+const phoneRegexWithSpaces = /^\+[1-9][0-9\s]{6,19}$/;
 
 
 
