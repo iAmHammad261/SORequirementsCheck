@@ -59,7 +59,7 @@ const requiredDate = (label) =>
 
 const phoneSchema = z
   .string()
-  .regex(phoneRegexWithSpaces, "Invalid phone number format")
+  .regex(phoneRegexWithSpaces, "Must start with '+' and country code (e.g., +1 234 567 8900). No leading zeros allowed after the '+'.")
   .transform((val) => val.replace(/\s+/g, ""));
 
 const optionalPercent = (label) =>
