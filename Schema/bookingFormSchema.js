@@ -6,8 +6,6 @@ import { z } from "https://esm.sh/zod";
 
 const phoneRegexWithSpaces = /^\+[1-9][0-9\s]{6,19}$/;
 
-
-
 const requiredString = (label) =>
   z
     .string({
@@ -24,16 +22,17 @@ const requiredNumber = (label, min = 1) =>
       if (val === "" || val === null || val === undefined) return undefined;
       return Number(val);
     },
-    z.number({
-      error: (iss) =>
-        iss.input == undefined || iss.input === null || iss.input === ""
-          ? `${label} is required`
-          : `${label} must be a valid number`,
-    })
-    .min(min, `${label} is required`)
+    z
+      .number({
+        error: (iss) =>
+          iss.input == undefined || iss.input === null || iss.input === ""
+            ? `${label} is required`
+            : `${label} must be a valid number`,
+      })
+      .min(min, `${label} is required`),
   );
 
-  const cleanAddressString = (label) =>
+const cleanAddressString = (label) =>
   z.preprocess((val) => {
     if (typeof val === "string") {
       return val.split("|;|")[0].trim();
@@ -59,7 +58,10 @@ const requiredDate = (label) =>
 
 const phoneSchema = z
   .string()
-  .regex(phoneRegexWithSpaces, "Must start with '+' and country code (e.g., +1 234 567 8900). No leading zeros allowed after the '+'.")
+  .regex(
+    phoneRegexWithSpaces,
+    "Must start with '+' and country code (e.g., +1 234 567 8900). No leading zeros allowed after the '+'.",
+  )
   .transform((val) => val.replace(/\s+/g, ""));
 
 const optionalPercent = (label) =>
@@ -68,11 +70,11 @@ const optionalPercent = (label) =>
       val === "" || val === null || val === undefined ? undefined : val,
     z.coerce
       .number({
-        message: `${label} must be a valid number`, 
+        message: `${label} must be a valid number`,
       })
       .min(1, `${label} must be between 1 and 100`)
       .max(100, `${label} must be between 1 and 100`)
-      .optional()
+      .optional(),
   );
 
 const basePersonSchema = z.object({
@@ -82,7 +84,7 @@ const basePersonSchema = z.object({
   CURRENT_ADDRESS: cleanAddressString("Current Address"),
   IDENTIFICATION_DOCUMENT_TYPE: requiredNumber("Identification Document Type"),
   IDENTIFICATION_DOCUMENT_NUMBER: requiredString(
-    "Identification Document Number"
+    "Identification Document Number",
   ),
   EMAIL: z.email({
     error: (iss) =>
@@ -106,7 +108,10 @@ const buyerDataSchema = basePersonSchema.extend({
     .email("Alternative email must be a valid email format")
     .nullable()
     .optional(),
-  ALTERNATIVE_PHONE_NUMBER: phoneSchema.or(z.literal("")).nullable().optional(),
+  ALTERNATIVE_PHONE_NUMBER: z.preprocess(
+    (val) => (val === "" || val === null ? undefined : val),
+    phoneSchema.optional(),
+  ),
   DATE_OF_BIRTH: requiredDate("Date of Birth"),
   BUYER_IMAGE: requiredUrl("Buyer Image"),
   GENDER: requiredNumber("Gender"),
@@ -129,7 +134,7 @@ const paymentDetailsSchema = z
           message: "Payment Plan Units can not be empty",
         })
         .min(1, "Payment Plan Units cannot be zero")
-        .optional()
+        .optional(),
     ),
     MODE_OF_PAYMENT: requiredNumber("Mode of Payment"),
     CHEQUE_OR_PAY_ORDER_NUMBER: requiredString("Cheque/Pay Order Number"),
@@ -141,7 +146,6 @@ const paymentDetailsSchema = z
   })
   .superRefine((data, ctx) => {
     if (Number(data.PAYMENT_PLAN) !== 533) {
-      
       const validateNumericField = (val, path, label) => {
         if (val === undefined || val === null || val === "") {
           ctx.addIssue({
@@ -149,18 +153,18 @@ const paymentDetailsSchema = z
             message: `${label} is required for this payment mode`,
             path: [path],
           });
-        } 
+        }
       };
 
       validateNumericField(
         data.DOWN_PAYMENT_PERCENT,
         "DOWN_PAYMENT_PERCENT",
-        "Downpayment Percent"
+        "Downpayment Percent",
       );
       validateNumericField(
         data.POSSESSION_PERCENT,
         "POSSESSION_PERCENT",
-        "Possession Percent"
+        "Possession Percent",
       );
 
       const unitNum = Number(data.PAYMENT_PLAN_UNITS);
@@ -187,17 +191,17 @@ const paymentDetailsSchema = z
 export const bookingFormDataSchema = z.object({
   buyerData: z.preprocess(
     (val) => (val === undefined || val === null ? [] : val),
-    z.array(buyerDataSchema).min(1, "At least one buyer is required")
+    z.array(buyerDataSchema).min(1, "At least one buyer is required"),
   ),
   nomineeData: z.preprocess(
     (val) => (val === undefined || val === null ? [] : val),
-    z.array(nomineeDataSchema).min(1, "At least one nominee is required")
+    z.array(nomineeDataSchema).min(1, "At least one nominee is required"),
   ),
   paymentDetails: z
     .any()
     .refine(
       (val) => val !== undefined && val !== null,
-      "Payment details are required" 
+      "Payment details are required",
     )
     .pipe(paymentDetailsSchema),
 });
