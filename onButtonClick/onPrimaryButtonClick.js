@@ -1,3 +1,79 @@
+const buildSuccessLayout = (message) => ({
+    blocks: {
+        section1: {
+            type: "section",
+            properties: {
+                type: "withBorder",
+                title: "Success",
+                blocks: {
+                    successHeading: {
+                        type: "text",
+                        properties: {
+                            value: "✅ Operation Successful",
+                            size: "xl",
+                            bold: true,
+                            color: "success",
+                        },
+                    },
+                    successDetails: {
+                        type: "text",
+                        properties: {
+                            value: message,
+                            size: "sm",
+                            multiline: true,
+                            color: "base_70",
+                        },
+                    },
+                },
+            },
+        },
+    },
+    primaryButton: null,
+});
+
+const buildErrorLayout = (message) => ({
+    blocks: {
+        section1: {
+            type: "section",
+            properties: {
+                type: "withBorder",
+                title: "Error",
+                blocks: {
+                    errorHeading: {
+                        type: "text",
+                        properties: {
+                            value: "⚠️ Operation Failed",
+                            size: "xl",
+                            bold: true,
+                            color: "base_90",
+                        },
+                    },
+                    errorDetails: {
+                        type: "text",
+                        properties: {
+                            value: message,
+                            size: "sm",
+                            multiline: true,
+                            color: "base_90",
+                        },
+                    },
+                    revertNote: {
+                        type: "text",
+                        properties: {
+                            value: "Reverting in a few seconds...",
+                            size: "sm",
+                            color: "base_70",
+                        },
+                    },
+                },
+            },
+        },
+    },
+    primaryButton: null,
+});
+
+
+
 export const onButtonClick = async (buyerData, nomineeData, paymentDetails) => {
   BX24.placement.call("lock");
 
@@ -27,11 +103,26 @@ export const onButtonClick = async (buyerData, nomineeData, paymentDetails) => {
       body: JSON.stringify(combinedData),
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+   if (!response.ok) {
+        BX24.placement.call("setLayout", buildErrorLayout(result.details || result.error || "Something went wrong"), null);
+
+        setTimeout(async () => {
+            const { layoutDto: newLayoutDto } = await constructLayoutDto(dealId);
+            BX24.placement.call("setLayout", newLayoutDto, null);
+        }, 5000);
+
+        return;
     }
 
     const result = await response.json();
+
+    
+
+
+
+
+
+
     console.log("Response from backend:", result);
 
     BX24.placement.call("unlock");
