@@ -1,80 +1,78 @@
 import { constructLayoutDto } from "../ConstructLayout/constructLayoutDto.js";
 
 const buildSuccessLayout = (message) => ({
-    blocks: {
-        section1: {
-            type: "section",
+  blocks: {
+    section1: {
+      type: "section",
+      properties: {
+        type: "withBorder",
+        title: "Success",
+        blocks: {
+          successHeading: {
+            type: "text",
             properties: {
-                type: "withBorder",
-                title: "Success",
-                blocks: {
-                    successHeading: {
-                        type: "text",
-                        properties: {
-                            value: "✅ Operation Successful",
-                            size: "xl",
-                            bold: true,
-                            color: "success",
-                        },
-                    },
-                    successDetails: {
-                        type: "text",
-                        properties: {
-                            value: message,
-                            size: "sm",
-                            multiline: true,
-                            color: "base_70",
-                        },
-                    },
-                },
+              value: "✅ Operation Successful",
+              size: "xl",
+              bold: true,
+              color: "success",
             },
+          },
+          successDetails: {
+            type: "text",
+            properties: {
+              value: message,
+              size: "sm",
+              multiline: true,
+              color: "base_70",
+            },
+          },
         },
+      },
     },
-    primaryButton: null,
+  },
+  primaryButton: null,
 });
 
 const buildErrorLayout = (message) => ({
-    blocks: {
-        section1: {
-            type: "section",
+  blocks: {
+    section1: {
+      type: "section",
+      properties: {
+        type: "withBorder",
+        title: "Error",
+        blocks: {
+          errorHeading: {
+            type: "text",
             properties: {
-                type: "withBorder",
-                title: "Error",
-                blocks: {
-                    errorHeading: {
-                        type: "text",
-                        properties: {
-                            value: "⚠️ Operation Failed",
-                            size: "xl",
-                            bold: true,
-                            color: "base_90",
-                        },
-                    },
-                    errorDetails: {
-                        type: "text",
-                        properties: {
-                            value: message,
-                            size: "sm",
-                            multiline: true,
-                            color: "base_90",
-                        },
-                    },
-                    revertNote: {
-                        type: "text",
-                        properties: {
-                            value: "Reverting in a few seconds...",
-                            size: "sm",
-                            color: "base_70",
-                        },
-                    },
-                },
+              value: "⚠️ Operation Failed",
+              size: "xl",
+              bold: true,
+              color: "base_90",
             },
+          },
+          errorDetails: {
+            type: "text",
+            properties: {
+              value: message,
+              size: "sm",
+              multiline: true,
+              color: "base_90",
+            },
+          },
+          revertNote: {
+            type: "text",
+            properties: {
+              value: "Reverting in a few seconds...",
+              size: "sm",
+              color: "base_70",
+            },
+          },
         },
+      },
     },
-    primaryButton: null,
+  },
+  primaryButton: null,
 });
-
-
 
 export const onButtonClick = async (buyerData, nomineeData, paymentDetails) => {
   BX24.placement.call("lock");
@@ -105,45 +103,43 @@ export const onButtonClick = async (buyerData, nomineeData, paymentDetails) => {
       body: JSON.stringify(combinedData),
     });
 
+    const result = await response.json();
 
-     const result = await response.json();
+    if (!response.ok) {
+      BX24.placement.call(
+        "setLayout",
+        buildErrorLayout(
+          result.details || result.error || "Something went wrong",
+        ),
+        null,
+      );
 
-   if (!response.ok) {
-        BX24.placement.call("setLayout", buildErrorLayout(result.details || result.error || "Something went wrong"), null);
-
-        setTimeout(async () => {
-            const { layoutDto: newLayoutDto } = await constructLayoutDto();
-            BX24.placement.call("setLayout", newLayoutDto, null);
-        }, 2500);
-
-
-        BX24.placement.call("unlock");
-
-        return;
-    }
-
-    BX24.placement.call("setLayout", buildSuccessLayout(result.message || "The operation was successful."), null);
-
-
-    setTimeout(async () => {
+      setTimeout(async () => {
         const { layoutDto: newLayoutDto } = await constructLayoutDto();
         BX24.placement.call("setLayout", newLayoutDto, null);
-    }, 2500);
+      }, 2500);
 
-    BX24.placement.call("unlock");
+      BX24.placement.call("unlock");
 
-    return;
+      return;
+    }
 
+    if (response.ok) {
+      const { salesOrderId, uploadSummary, allFilesSuccessful } = result.result;
 
+      const successMessage =
+        `Sales Order ID: ${salesOrderId}\n` +
+        `Files Uploaded: ${allFilesSuccessful ? "All Successful" : "Some Failed"}\n` +
+        `${uploadSummary.join("\n")}`;
 
-   
+      BX24.placement.call(
+        "setLayout",
+        buildSuccessLayout(successMessage),
+        null,
+      );
 
-    
-
-
-
-
-
+      revertLayout(dealId);
+    }
 
     console.log("Response from backend:", result);
 
