@@ -138,12 +138,15 @@ export const onButtonClick = async (buyerData, nomineeData, paymentDetails) => {
         null,
       );
 
-      revertLayout(dealId);
+      setTimeout(async () => {
+        const { layoutDto: newLayoutDto } = await constructLayoutDto();
+        BX24.placement.call("setLayout", newLayoutDto, null);
+      }, 2500);
+
+      BX24.placement.call("unlock");
+
+      return;
     }
-
-    console.log("Response from backend:", result);
-
-    BX24.placement.call("unlock");
   } catch (error) {
     console.error("Error occurred while fetching data:", error);
     BX24.placement.call("unlock");
