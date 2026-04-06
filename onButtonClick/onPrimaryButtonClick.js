@@ -75,6 +75,7 @@ const buildErrorLayout = (message) => ({
 });
 
 export const onButtonClick = async (buyerData, nomineeData, paymentDetails) => {
+  const dealID = BX24.placement.info().options.entityId;
   BX24.placement.call("lock");
 
   const API_URL =
@@ -87,6 +88,7 @@ export const onButtonClick = async (buyerData, nomineeData, paymentDetails) => {
   console.log("Payment Details:", paymentDetails);
 
   const combinedData = {
+    dealID,
     buyerData,
     nomineeData,
     paymentDetails,
