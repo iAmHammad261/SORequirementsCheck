@@ -114,13 +114,27 @@ export const onButtonClick = async (buyerData, nomineeData, paymentDetails) => {
         setTimeout(async () => {
             const { layoutDto: newLayoutDto } = await constructLayoutDto();
             BX24.placement.call("setLayout", newLayoutDto, null);
-        }, 5000);
+        }, 2500);
 
 
         BX24.placement.call("unlock");
 
         return;
     }
+
+    BX24.placement.call("setLayout", buildSuccessLayout(result.message || "The operation was successful."), null);
+
+
+    setTimeout(async () => {
+        const { layoutDto: newLayoutDto } = await constructLayoutDto();
+        BX24.placement.call("setLayout", newLayoutDto, null);
+    }, 2500);
+
+    BX24.placement.call("unlock");
+
+    return;
+
+
 
    
 
