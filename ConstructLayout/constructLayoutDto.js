@@ -3,7 +3,9 @@ import { checkSalesOrderLink } from "../checkRequirementCondition/checkSalesOrde
 import { getMoreDealData } from "../HelperFunctions/getMoreDealData.js";
 import { checkRequirements } from "../checkRequirementCondition/checkRequirements.js";
 
-export const constructLayoutDto = async (dealId) => {
+export const constructLayoutDto = async () => {
+
+  const dealId = BX24.placement.info().options.entityId;
 
   const contactIdsList = await getContactIdOfList(dealId);
   console.log("Contact IDs List for the Deal:", contactIdsList);

@@ -7,7 +7,7 @@ BX24.init(async function() {
     
     console.log("1. Bitrix24 script loaded and initialized.");
 
-    BX24.placement.call('bindEntityUpdateCallback', null, () => processChanges(layoutDto, dealId));
+    BX24.placement.call('bindEntityUpdateCallback', null, () => processChanges(layoutDto));
 
 
     try {
@@ -29,7 +29,7 @@ BX24.init(async function() {
 
         // CHECK 3: Define Layout
 
-        var {layoutDto, buyerData, nomineeData, paymentDetails} = await constructLayoutDto(dealId);
+        var {layoutDto, buyerData, nomineeData, paymentDetails} = await constructLayoutDto();
 
         // CHECK 4: Execute Call
         

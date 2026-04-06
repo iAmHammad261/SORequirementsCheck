@@ -10,7 +10,7 @@
 import { constructLayoutDto } from "./ConstructLayout/constructLayoutDto.js";
 
 
-export const processChanges = async (layoutDto, dealId) => {
+export const processChanges = async (layoutDto) => {
 
     BX24.placement.call("lock");
 
@@ -91,7 +91,7 @@ export const processChanges = async (layoutDto, dealId) => {
     //     }
     // }
 
-    var {layoutDto : newLayoutDto} = await constructLayoutDto(dealId);
+    var {layoutDto : newLayoutDto} = await constructLayoutDto();
 
     BX24.placement.call("unlock");
 
