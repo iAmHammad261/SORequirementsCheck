@@ -103,6 +103,9 @@ export const onButtonClick = async (buyerData, nomineeData, paymentDetails) => {
       body: JSON.stringify(combinedData),
     });
 
+
+     const result = await response.json();
+
    if (!response.ok) {
         BX24.placement.call("setLayout", buildErrorLayout(result.details || result.error || "Something went wrong"), null);
 
@@ -114,7 +117,7 @@ export const onButtonClick = async (buyerData, nomineeData, paymentDetails) => {
         return;
     }
 
-    const result = await response.json();
+   
 
     
 
