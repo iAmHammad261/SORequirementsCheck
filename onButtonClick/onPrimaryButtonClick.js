@@ -112,7 +112,7 @@ export const onButtonClick = async (buyerData, nomineeData, paymentDetails) => {
         BX24.placement.call("setLayout", buildErrorLayout(result.details || result.error || "Something went wrong"), null);
 
         setTimeout(async () => {
-            const { layoutDto: newLayoutDto } = await constructLayoutDto(dealId);
+            const { layoutDto: newLayoutDto } = await constructLayoutDto();
             BX24.placement.call("setLayout", newLayoutDto, null);
         }, 5000);
 
