@@ -13,6 +13,7 @@ export const getPaymentDetails = async (dealId, dealData) => {
     PAYMENT_START_DATE: dealData.UF_CRM_1767727123846,
     MODE_OF_PAYMENT: dealData.UF_CRM_1767773115009,
     CHEQUE_OR_PAY_ORDER_NUMBER: dealData.UF_CRM_1767773157225,
+    PRICE_CALCULATION_MODE: dealData.UF_CRM_1775547541216
   };
   return paymentDetails;
 };

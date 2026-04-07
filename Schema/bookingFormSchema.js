@@ -143,6 +143,7 @@ const paymentDetailsSchema = z
     PRICE: requiredNumber("Price"),
     PRODUCT_ID: requiredNumber("Product ID"),
     PAYMENT_START_DATE: requiredDate("Payment Start Date"),
+    PRICE_CALCULATION_MODE: requiredNumber("Price Calculation Mode"),
   })
   .superRefine((data, ctx) => {
     if (Number(data.PAYMENT_PLAN) !== 533) {
