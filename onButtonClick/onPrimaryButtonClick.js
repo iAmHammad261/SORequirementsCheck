@@ -78,6 +78,7 @@ const buildErrorLayout = (message) => ({
 });
 
 export const onButtonClick = async () => {
+  BX24.placement.call("lock");
   const dealId = BX24.placement.info().options.entityId;
   const { buyerData, nomineeData, paymentDetails } = await collectData(dealId);
 
