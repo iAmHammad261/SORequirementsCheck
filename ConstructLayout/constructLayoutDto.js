@@ -20,7 +20,7 @@ export const constructLayoutDto = async () => {
                 syncedMessage: {
                   type: "text",
                   properties: {
-                    value: "✅ This deal is already synced with NetSuite.",
+                    value: "This deal is already synced with NetSuite.",
                     size: "xl",
                     bold: true,
                     color: "success",
