@@ -1,25 +1,7 @@
-import { z} from 'https://esm.sh/zod'
-
-import { getBuyerData } from '../HelperFunctions/getBuyerData.js'
-import { getNomineeData } from '../HelperFunctions/getNomineeData.js'
-import { getPaymentDetails } from '../HelperFunctions/getPaymentDetails.js'
 import { bookingFormDataSchema } from '../Schema/bookingFormSchema.js'
+import { collectData } from './collectBookingFormData.js'
 
 
-const collectData = async (contactIdList, dealID, dealData) => {
-
-    const buyerData = await getBuyerData(contactIdList);
-
-    const nomineeData = await getNomineeData(contactIdList); 
-
-    const paymentDetails = await getPaymentDetails(dealID, dealData);
-
-    return {
-        buyerData,
-        nomineeData,
-        paymentDetails
-    }
-}
 
 const extractCategoryErrors = (issues, categoryName, displayLabel) => {
     const categoryIssues = issues.filter(issue => issue.path[0] === categoryName);
@@ -86,14 +68,12 @@ export const checkRequirements = async(contactIdList, dealID, dealData) => {
         
         return {
             success: false,
-            data: collectedData,
             errors: errors 
         };
     }
 
     return {
         success: true,
-        data: collectedData,
         errors: { buyerData: null, nomineeData: null, paymentDetails: null }
     };
 

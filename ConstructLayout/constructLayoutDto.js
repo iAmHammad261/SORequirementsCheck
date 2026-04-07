@@ -40,7 +40,6 @@ export const constructLayoutDto = async () => {
   // Call the single validation function
   const {
     success: requirementStatus,
-    data: collectedData,
     errors,
   } = await checkRequirements(contactIdsList, dealId, dealData);
 
@@ -180,8 +179,5 @@ export const constructLayoutDto = async () => {
 
   return {
     layoutDto,
-    buyerData: collectedData?.buyerData || null,
-    nomineeData: collectedData?.nomineeData || null,
-    paymentDetails: collectedData?.paymentDetails || null,
   };
 };

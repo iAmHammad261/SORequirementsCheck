@@ -1,4 +1,7 @@
 import { constructLayoutDto } from "../ConstructLayout/constructLayoutDto.js";
+import { getContactIdOfList } from "../HelperFunctions/getContactIdsListOfDeal.js";
+import { getMoreDealData } from "../HelperFunctions/getMoreDealData.js";
+import { collectData } from "../checkRequirementCondition/collectBookingFormData.js";
 
 const buildSuccessLayout = (message) => ({
   blocks: {
@@ -74,10 +77,10 @@ const buildErrorLayout = (message) => ({
   primaryButton: null,
 });
 
-export const onButtonClick = async (buyerData, nomineeData, paymentDetails) => {
+export const onButtonClick = async () => {
   const dealId = BX24.placement.info().options.entityId;
-  BX24.placement.call("lock");
- 
+  const { buyerData, nomineeData, paymentDetails } = await collectData(dealId);
+
   const API_URL =
     "https://bookingformtosalesorder.premierchoiceint.online/create-booking-form";
 
