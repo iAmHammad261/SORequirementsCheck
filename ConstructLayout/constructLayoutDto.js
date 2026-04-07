@@ -4,11 +4,41 @@ import { getMoreDealData } from "../HelperFunctions/getMoreDealData.js";
 import { checkRequirements } from "../checkRequirementCondition/checkRequirements.js";
 
 export const constructLayoutDto = async () => {
-
   const dealId = BX24.placement.info().options.entityId;
 
+  const salesOrderLinkExists = await checkSalesOrderLink(dealData);
+
+  if (salesOrderLinkExists)
+    return {
+      layoutDto: {
+        blocks: {
+          section1: {
+            type: "section",
+            properties: {
+              type: "withBorder",
+              title: "Welcome to Our Custom App",
+              imageSrc:
+                "https://logowik.com/content/uploads/images/bitrix241512.jpg",
+              blocks: {
+                syncedMessage: {
+                  type: "text",
+                  properties: {
+                    value: "✅ This deal is already synced with NetSuite.",
+                    size: "xl",
+                    bold: true,
+                    color: "success",
+                    multiline: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        primaryButton: null,
+      },
+    };
+
   const contactIdsList = await getContactIdOfList(dealId);
-  console.log("Contact IDs List for the Deal:", contactIdsList);
 
   const dealData = await getMoreDealData(dealId);
 
@@ -16,15 +46,13 @@ export const constructLayoutDto = async () => {
   const {
     success: requirementStatus,
     data: collectedData,
-    errors
+    errors,
   } = await checkRequirements(contactIdsList, dealId, dealData);
 
   // Determine individual statuses based on the absence of errors
   const buyerStatus = !errors.buyerData;
   const nomineeStatus = !errors.nomineeData;
   const paymentStatus = !errors.paymentDetails;
-
-  const salesOrderLinkExists = await checkSalesOrderLink(dealData);
 
   // Calculate remaining steps dynamically
   const stepsRemaining =
@@ -39,7 +67,8 @@ export const constructLayoutDto = async () => {
         properties: {
           type: "withBorder",
           title: "Welcome to Our Custom App",
-          imageSrc: "https://logowik.com/content/uploads/images/bitrix241512.jpg",
+          imageSrc:
+            "https://logowik.com/content/uploads/images/bitrix241512.jpg",
           blocks: {
             mainHeading: {
               type: "text",
@@ -50,7 +79,7 @@ export const constructLayoutDto = async () => {
                 color: "base_90",
               },
             },
-            
+
             // BUYER BLOCK
             buyer_requirement01_heading: {
               type: "text",

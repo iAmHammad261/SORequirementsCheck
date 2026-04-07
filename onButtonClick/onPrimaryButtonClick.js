@@ -78,6 +78,9 @@ export const onButtonClick = async (buyerData, nomineeData, paymentDetails) => {
   const dealId = BX24.placement.info().options.entityId;
   BX24.placement.call("lock");
 
+
+  
+
   const API_URL =
     "https://bookingformtosalesorder.premierchoiceint.online/create-booking-form";
 
