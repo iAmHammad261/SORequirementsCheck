@@ -4,13 +4,13 @@ import { getPaymentDetails } from "../HelperFunctions/getPaymentDetails.js";
 import { getMoreDealData } from "../HelperFunctions/getMoreDealData.js";
 import { getContactIdOfList } from "../HelperFunctions/getContactIdsListOfDeal.js";
 
-export const collectData = async (dealData) => {
+export const collectData = async () => {
   const dealId = BX24.placement.info().options.entityId;
   const [contactIdList, dealData] = await Promise.all([
     getContactIdOfList(dealId),
     getMoreDealData(dealId),
   ]);
-  
+
   const [buyerData, nomineeData, paymentDetails] = await Promise.all([
     getBuyerData(contactIdList),
     getNomineeData(contactIdList),
