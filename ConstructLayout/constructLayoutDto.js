@@ -15,10 +15,7 @@ export const constructLayoutDto = async () => {
           section1: {
             type: "section",
             properties: {
-              type: "withBorder",
-              title: "Welcome to Our Custom App",
-              imageSrc:
-                "https://logowik.com/content/uploads/images/bitrix241512.jpg",
+              type: "success",
               blocks: {
                 syncedMessage: {
                   type: "text",
@@ -39,7 +36,6 @@ export const constructLayoutDto = async () => {
     };
 
   const contactIdsList = await getContactIdOfList(dealId);
-
 
   // Call the single validation function
   const {
