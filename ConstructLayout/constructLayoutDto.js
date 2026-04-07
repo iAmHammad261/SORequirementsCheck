@@ -5,7 +5,7 @@ import { checkRequirements } from "../checkRequirementCondition/checkRequirement
 
 export const constructLayoutDto = async () => {
   const dealId = BX24.placement.info().options.entityId;
-
+  const dealData = await getMoreDealData(dealId);
   const salesOrderLinkExists = await checkSalesOrderLink(dealData);
 
   if (salesOrderLinkExists)
@@ -40,7 +40,6 @@ export const constructLayoutDto = async () => {
 
   const contactIdsList = await getContactIdOfList(dealId);
 
-  const dealData = await getMoreDealData(dealId);
 
   // Call the single validation function
   const {
