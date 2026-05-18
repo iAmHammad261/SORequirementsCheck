@@ -40,7 +40,8 @@ export const getBuyerData = async (contactIdsList) => {
 
   // Safety check
   if (buyerData.length == 0) {
-    throw new Error("No buyer contacts found for the deal");
+    console.error("No buyer contacts found for the deal");
+    return [];
   }
 
   // Loop through and format the data
