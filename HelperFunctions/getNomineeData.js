@@ -37,7 +37,8 @@ export const getNomineeData = async (contactIdsList) => {
   console.log("Nominee Data:", nomineeData);
 
   if (nomineeData.length == 0) {
-    throw new Error("No nominee contacts found for the deal");
+    console.error("No nominee contacts found for the deal");
+    return [];
   }
 
   var objectToHoldNomineeData = {};
