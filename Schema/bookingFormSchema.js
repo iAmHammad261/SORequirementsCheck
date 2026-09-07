@@ -4,8 +4,6 @@
 
 import { z } from "https://esm.sh/zod";
 
-const phoneRegexWithSpaces = /^\+[1-9][0-9\s]{6,19}$/;
-
 const requiredString = (label) =>
   z
     .string({
@@ -56,13 +54,9 @@ const requiredDate = (label) =>
         : `Invalid date format for ${label}`,
   });
 
-const phoneSchema = z
-  .string()
-  .regex(
-    phoneRegexWithSpaces,
-    "Must start with '+' and country code (e.g., +1 234 567 8900). No leading zeros allowed after the '+'.",
-  )
-  .transform((val) => val.replace(/\s+/g, ""));
+const phoneSchema = requiredString("Phone").transform((val) =>
+  val.replace(/\s+/g, ""),
+);
 
 const optionalPercent = (label) =>
   z.preprocess(
