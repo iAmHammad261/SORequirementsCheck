@@ -15,16 +15,20 @@ export const getPaymentDetails = async (dealId, dealData) => {
 
   const planData = parseJsonField(dealData.UF_CRM_1785469114);
   const installmentData = parseJsonField(dealData.UF_CRM_1785782153277);
+  const installmentRows = installmentData?.rows ?? [];
 
   const planType = planData?.paymentPlan?.planType;
   const totalPrice = planData?.paymentPlan?.valueSnapshot?.totalPrice;
 
   let paymentStartDate;
   if (planType === "custom") {
-    paymentStartDate = installmentData?.rows?.[0]?.isoDate;
+    paymentStartDate = installmentRows[0]?.date;
   } else if (planType === "standard") {
     paymentStartDate = planData?.paymentPlan?.downPaymentDate;
   }
+
+  const possessionPaymentDate =
+    installmentRows[installmentRows.length - 1]?.date;
 
   const paymentDetails = {
     PRODUCT_ID: productRows.length > 0 ? productRows[0].PRODUCT_ID : null,
@@ -33,8 +37,8 @@ export const getPaymentDetails = async (dealId, dealData) => {
     PAYMENT_PLAN_UNITS: dealData.UF_CRM_1767715497,
     DOWN_PAYMENT_PERCENT: dealData.UF_CRM_1766573650,
     POSSESSION_PERCENT: dealData.UF_CRM_1767360946916,
-    DOWN_PAYMENT_DATE: dealData.UF_CRM_1781081933954,
-    POSESSION_PAYMENT_DATE: dealData.UF_CRM_1781081947364,
+    DOWN_PAYMENT_DATE: paymentStartDate,
+    POSESSION_PAYMENT_DATE: possessionPaymentDate,
     PAYMENT_START_DATE: paymentStartDate,
     MODE_OF_PAYMENT: dealData.UF_CRM_1767773115009,
     BALLON_PAYMENT: dealData.UF_CRM_1781002959418,
