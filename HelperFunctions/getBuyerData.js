@@ -9,7 +9,7 @@ export const getBuyerData = async (contactIdsList) => {
   var buyerData = await callBX24Method("crm.contact.list", {
     filter: {
       "@ID": contactIdsList,
-      "=UF_CRM_1767876111269": 665,
+      "=TYPE_ID": "UC_W9PEF0",
     },
     select: [
       "NAME",

@@ -10,7 +10,7 @@ export const getNomineeData = async (contactIdsList) => {
   var nomineeData = await callBX24Method("crm.contact.list", {
     filter: {
       "@ID": contactIdsList,
-      "=UF_CRM_1767876111269": 667,
+      "=TYPE_ID": "UC_E6YC7J",
     },
     select: [
       "NAME",
