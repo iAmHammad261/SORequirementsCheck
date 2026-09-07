@@ -40,6 +40,7 @@ export const getPaymentDetails = async (dealId, dealData) => {
     BALLON_PAYMENT: dealData.UF_CRM_1781002959418,
     CHEQUE_OR_PAY_ORDER_NUMBER: dealData.UF_CRM_1767773157225,
     PRICE_CALCULATION_MODE: dealData.UF_CRM_1775547541216,
+    paymentPlanTable: dealData.UF_CRM_1785782153277,
   };
   return paymentDetails;
 };
