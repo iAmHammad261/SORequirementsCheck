@@ -49,6 +49,7 @@ const extractCategoryErrors = (issues, categoryName, displayLabel) => {
 
 
 const REQUIRED_STAGE_ID = 'C9:EXECUTING';
+const REQUIRED_STAGE_LABEL = 'Confirm Booking';
 
 export const checkRequirements = async(contactIdList, dealID, dealData) => {
     const collectedData = await collectData(contactIdList, dealID, dealData);
@@ -60,7 +61,7 @@ export const checkRequirements = async(contactIdList, dealID, dealData) => {
     const dealStageOk = dealData?.STAGE_ID === REQUIRED_STAGE_ID;
     const dealStageError = dealStageOk
         ? null
-        : `Deal must be in the "${REQUIRED_STAGE_ID}" stage before syncing.`;
+        : `Deal must be in the "${REQUIRED_STAGE_LABEL}" stage before syncing.`;
 
     if (!validationResult.success || !dealStageOk) {
         const issues = validationResult.success ? [] : validationResult.error.issues;
