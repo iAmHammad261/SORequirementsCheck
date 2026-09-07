@@ -48,12 +48,14 @@ export const constructLayoutDto = async () => {
   const buyerStatus = !errors.buyerData;
   const nomineeStatus = !errors.nomineeData;
   const paymentStatus = !errors.paymentDetails;
+  const dealStageStatus = !errors.dealStage;
 
   // Calculate remaining steps dynamically
   const stepsRemaining =
     (!buyerStatus ? 1 : 0) +
     (!nomineeStatus ? 1 : 0) +
-    (!paymentStatus ? 1 : 0);
+    (!paymentStatus ? 1 : 0) +
+    (!dealStageStatus ? 1 : 0);
 
   const layoutDto = {
     blocks: {
@@ -138,6 +140,28 @@ export const constructLayoutDto = async () => {
                 size: "sm",
                 multiline: true,
                 color: paymentStatus ? "base_70" : "base_90",
+              },
+            },
+
+            // DEAL STAGE BLOCK
+            deal_stage_requirement04_heading: {
+              type: "text",
+              properties: {
+                value: dealStageStatus
+                  ? "4) Deal stage (completed)"
+                  : "4) Deal stage (Action Required)",
+                size: "lg",
+                bold: true,
+                color: dealStageStatus ? "base_70" : "base_90",
+              },
+            },
+            deal_stage_requirement04_details: {
+              type: "text",
+              properties: {
+                value: dealStageStatus ? "" : errors.dealStage,
+                size: "sm",
+                multiline: true,
+                color: dealStageStatus ? "base_70" : "base_90",
               },
             },
           },

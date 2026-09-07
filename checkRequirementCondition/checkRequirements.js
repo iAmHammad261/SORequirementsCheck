@@ -48,6 +48,8 @@ const extractCategoryErrors = (issues, categoryName, displayLabel) => {
 };
 
 
+const REQUIRED_STAGE_ID = 'C9:EXECUTING';
+
 export const checkRequirements = async(contactIdList, dealID, dealData) => {
     const collectedData = await collectData(contactIdList, dealID, dealData);
 
@@ -55,26 +57,32 @@ export const checkRequirements = async(contactIdList, dealID, dealData) => {
 
     const validationResult = bookingFormDataSchema.safeParse(collectedData);
 
-    if (!validationResult.success) {
-        const issues = validationResult.error.issues;
-        
+    const dealStageOk = dealData?.STAGE_ID === REQUIRED_STAGE_ID;
+    const dealStageError = dealStageOk
+        ? null
+        : `Deal must be in the "${REQUIRED_STAGE_ID}" stage before syncing.`;
+
+    if (!validationResult.success || !dealStageOk) {
+        const issues = validationResult.success ? [] : validationResult.error.issues;
+
         const errors = {
             buyerData: extractCategoryErrors(issues, 'buyerData', 'Buyer'),
             nomineeData: extractCategoryErrors(issues, 'nomineeData', 'Nominee'),
-            paymentDetails: extractCategoryErrors(issues, 'paymentDetails', 'Payment Details')
+            paymentDetails: extractCategoryErrors(issues, 'paymentDetails', 'Payment Details'),
+            dealStage: dealStageError
         };
 
         console.error("Validation errors grouped:", errors);
-        
+
         return {
             success: false,
-            errors: errors 
+            errors: errors
         };
     }
 
     return {
         success: true,
-        errors: { buyerData: null, nomineeData: null, paymentDetails: null }
+        errors: { buyerData: null, nomineeData: null, paymentDetails: null, dealStage: null }
     };
 
 
