@@ -38,6 +38,8 @@ BX24.init(async function() {
 
        BX24.placement.call('bindPrimaryButtonClickCallback', null, (event) => onButtonClick());
 
+       BX24.placement.call('bindSecondaryButtonClickCallback', null, (event) => processChanges());
+
 
         // await changeTheBlockVisibility("primaryButton", false);
 

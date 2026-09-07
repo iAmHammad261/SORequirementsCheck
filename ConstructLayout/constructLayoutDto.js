@@ -32,6 +32,7 @@ export const constructLayoutDto = async () => {
           },
         },
         primaryButton: null,
+        secondaryButton: null,
       },
     };
 
@@ -175,6 +176,7 @@ export const constructLayoutDto = async () => {
       requirementStatus && !salesOrderLinkExists
         ? { title: "Sync With Netsuite" }
         : null,
+    secondaryButton: { title: "Refresh" },
   };
 
   return {
