@@ -117,71 +117,38 @@ const nomineeDataSchema = basePersonSchema.extend({
   NOMINEE_IMAGE: requiredUrl("Nominee Image"),
 });
 
-const paymentDetailsSchema = z
-  .object({
-    PAYMENT_PLAN: requiredNumber("Payment Plan"),
-    PAYMENT_PLAN_UNITS: z.preprocess(
-      (val) =>
-        val === "" || val === null || val === undefined ? undefined : val,
-      z.coerce
-        .number({
-          message: "Payment Plan Units can not be empty",
-        })
-        .min(1, "Payment Plan Units cannot be zero")
-        .optional(),
-    ),
-    MODE_OF_PAYMENT: requiredNumber("Mode of Payment"),
-    CHEQUE_OR_PAY_ORDER_NUMBER: requiredString("Cheque/Pay Order Number"),
-    DOWN_PAYMENT_PERCENT: optionalPercent("Downpayment Percent"),
-    POSSESSION_PERCENT: optionalPercent("Possession Percent"),
-    PRICE: requiredNumber("Price"),
-    PRODUCT_ID: requiredNumber("Product ID"),
-    PAYMENT_START_DATE: requiredDate("Payment Start Date"),
-    PRICE_CALCULATION_MODE: requiredNumber("Price Calculation Mode"),
-  })
-  .superRefine((data, ctx) => {
-    if (Number(data.PAYMENT_PLAN) !== 533) {
-      const validateNumericField = (val, path, label) => {
-        if (val === undefined || val === null || val === "") {
-          ctx.addIssue({
-            code: "custom",
-            message: `${label} is required for this payment mode`,
-            path: [path],
-          });
-        }
-      };
-
-      validateNumericField(
-        data.DOWN_PAYMENT_PERCENT,
-        "DOWN_PAYMENT_PERCENT",
-        "Downpayment Percent",
-      );
-      validateNumericField(
-        data.POSSESSION_PERCENT,
-        "POSSESSION_PERCENT",
-        "Possession Percent",
-      );
-
-      const unitNum = Number(data.PAYMENT_PLAN_UNITS);
-      if (
-        data.PAYMENT_PLAN_UNITS === undefined ||
-        data.PAYMENT_PLAN_UNITS === null ||
-        unitNum === 0
-      ) {
-        ctx.addIssue({
-          code: "custom",
-          message: "Payment Plan Units are required and cannot be zero",
-          path: ["PAYMENT_PLAN_UNITS"],
-        });
-      } else if (isNaN(unitNum)) {
-        ctx.addIssue({
-          code: "custom",
-          message: "Payment Plan Units must be a valid number",
-          path: ["PAYMENT_PLAN_UNITS"],
-        });
-      }
-    }
-  });
+const paymentDetailsSchema = z.object({
+  PAYMENT_PLAN: requiredString("Payment Plan").refine(
+    (val) => val === "custom" || val === "standard",
+    { message: "Payment Plan must be either custom or standard" },
+  ),
+  PAYMENT_PLAN_UNITS: z.preprocess(
+    (val) =>
+      val === "" || val === null || val === undefined ? undefined : val,
+    z.coerce
+      .number({
+        message: "Payment Plan Units can not be empty",
+      })
+      .min(1, "Payment Plan Units cannot be zero")
+      .optional(),
+  ),
+  MODE_OF_PAYMENT: requiredNumber("Mode of Payment"),
+  CHEQUE_OR_PAY_ORDER_NUMBER: requiredString("Cheque/Pay Order Number"),
+  DOWN_PAYMENT_PERCENT: optionalPercent("Downpayment Percent"),
+  POSSESSION_PERCENT: optionalPercent("Possession Percent"),
+  PRICE: requiredNumber("Price"),
+  PRODUCT_ID: requiredNumber("Product ID"),
+  PAYMENT_START_DATE: requiredDate("Payment Start Date"),
+  PRICE_CALCULATION_MODE: z.preprocess(
+    (val) =>
+      val === "" || val === null || val === undefined ? undefined : val,
+    z.coerce
+      .number({
+        message: "Price Calculation Mode must be a valid number",
+      })
+      .optional(),
+  ),
+});
 
 export const bookingFormDataSchema = z.object({
   buyerData: z.preprocess(
